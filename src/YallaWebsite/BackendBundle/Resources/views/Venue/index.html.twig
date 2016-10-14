@@ -1,0 +1,68 @@
+{% extends "YallaWebsiteBackendBundle:Venue:base_venue.html.twig" %}
+{% block controlleraction  %}
+    {% if pagination is empty %}
+        <div class="alert alert-info" role="alert">
+            <strong>No Venues!</strong> Found in database.
+        </div>
+    {% else %}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        Venues Information
+                    </div>
+                    <div class="panel-body">
+                        <p><strong>Number of Venues :</strong> <span class="badge badge-inverse">{{ entities }}</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        Event Listing
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered table-hover zebra">
+                                <thead>
+                                    <tr>
+                                        <th></th>                                        
+                                        <th>Venue Name</th>
+                                        <th>Venue Address</th>
+                                        <th>Venue Number</th>
+                                        <th>Venue Website</th>
+                                        <th>Venue Cover</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for venue in pagination %}
+                                        <tr>
+                                            <td style="text-align: center;"><a href="{{path ('backend_venue_delete',  {'id': venue.id}) }}"><button class="btn btn-danger btn-sm"><i class="fa fa-pencil"></i> Delete</button></a>
+                                                <a href="{{path ('backend_venue_show',  {'id': venue.id}) }}"><button class="btn btn-primary btn-sm"><i class="fa fa-eye"></i> View </button></a>
+                                            </td>
+                                            <td><a href="{{ path ('backend_venue_edit',  {'id': venue.id})}}">{{venue.title}}</a></td>
+                                            <td>{{venue.location.address}}</td>
+                                            <td>{{venue.location.telephone}}</td>
+                                            <td>{{venue.website}}</td>
+                                            <td>{% thumbnail  venue.media, 'small' %}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                    <div class="panel-footer">              
+                        <div class="navigation">
+                            {{ knp_pagination_render(pagination) }}
+                        </div>
+                    </div>
+                </div>
+            </div>        
+
+        </div>
+    </div>
+{% endif %}
+{% endblock %}

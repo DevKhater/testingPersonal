@@ -1,0 +1,12 @@
+<h5><strong>Homepage Featured Gallery</strong></h5>
+<div class='col-md-12 clearfix'>
+   <div style="float:left">
+        <select id="dd_feature_gallery" class="form-control">
+            {% for entity in galleries %}
+                <option value="{{entity.id}}">{{entity.name}} - {{entity.date|date("Y-m-d")}}</option>
+            {% endfor %}
+        </select>
+        <a id='featured_gallery' href='#' class='btn-sm btn-default'>Add To HomePage</a>
+    </div>
+</div>
+<br/><br/><br/>

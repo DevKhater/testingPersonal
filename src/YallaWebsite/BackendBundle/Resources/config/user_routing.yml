@@ -1,0 +1,17 @@
+backend_user_index:
+    path:   /
+    defaults:  { _controller: YallaWebsiteBackendBundle:User:index }
+
+backend_user_new:
+    path:   /new
+    defaults:  { _controller: YallaWebsiteBackendBundle:User:new }
+    
+backend_user_addpriv:
+    path:   /modify/{id}
+    defaults:  { _controller: YallaWebsiteBackendBundle:User:modify }
+
+backend_user_delete:
+    path:   /edit/{id}
+    defaults:  { _controller: YallaWebsiteBackendBundle:User:delete }
+    requirements: 
+          id: \d+

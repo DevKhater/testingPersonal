@@ -1,0 +1,114 @@
+{% extends "@YallaWebsiteFrontendBundle/views/front_base.html.twig" %}
+{% set tempArray = {} %}
+{% block stylesheets %}
+    {{parent()}}
+    <link rel="stylesheet" href="{{ asset('bundles/yallawebsitefrontend/css/jquery.galereya.css') }}" />
+    <link rel="stylesheet" href="{{ asset('bundles/yallawebsitefrontend/css/sweetalert.css') }}" />
+{% endblock %}    
+
+{% block body %}
+    <div class="wrapper">
+        <div class="theEntityDiv">
+            <div class="innerTitle">
+                <h1>{{gallery.name}} {{gallery.date|date("d/m/Y")}}</h1>
+            </div>
+            <div id="innerEntityContent">
+                {{ gallery.description }}
+            </div>
+            <div id="galleryViewPhotogtapher">
+                {% if gallery.photographers is not empty %}
+                    <p><span>Photo Credit</span>: 
+                        {% for ph in gallery.photographers %}
+                            <a href='ph.website'>{{ph.name}}</a> {% if not loop.last %} - {% endif %} 
+                        {% endfor %}
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div style="clear:both">
+            <div id='lightgallery'>
+                {% for galleryHasMedia in pagination %}
+                    {% set id = random() %}
+                    {% set tempArray = tempArray|merge({('_'~id):(voteValue(galleryHasMedia.id))}) %}            
+                    <img src="{% path galleryHasMedia.media, 'medium' %}"
+                         data-fullsrc="{% path galleryHasMedia.media, 'xlarge' %}" />
+                {% endfor %}
+                {#<div id='chocolat-image-data-adv' class="Adv_Display">{{ render_esi(url('ads_manager_show', { 'id': 'snapshot_popup' })) }}</div>#}
+            </div>
+            </div>
+        </div>
+            <div class='row' style="clear:both">
+            <div class="page_pagination">
+                {% if (pagination) %}
+                    {{ knp_pagination_render(pagination, 'YallaWebsiteFrontendBundle:Template:pagination.html.twig') }}
+                {% endif %}
+            </div></div>
+    </div>
+{% endblock %}
+
+{% block massonary %}
+    {% javascripts '@massonary' '@imagesloaded'%}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    <script type="text/javascript" src="{{ asset('bundles/yallawebsitefrontend/js/socialite.min.js') }}"></script>
+    <script src="{{ asset('bundles/yallawebsitefrontend/js/jquery.chocolat.js') }}"></script>
+    <script src="{{ asset('bundles/yallawebsitefrontend/js/jquery.galereya.js') }}"></script>
+    <script src="{{ asset('bundles/yallawebsitefrontend/js/sweetalert.min.js') }}"></script>
+    <script type="text/javascript">
+        function fb_login() {
+            var gID = {{gallery.id}};
+                    FB.getLoginStatus(function (response) {
+                        if (response.status === 'connected') {
+                            var uid = response.authResponse.userID;
+                            var img = $('.fb_vote span').attr('id');
+                            var token = uid + '-' + gID + '-' + img;
+                            voteAjax(img, token);
+                        } else {
+                            // not_authorized
+                            FB.login(function (response) {
+                                if (response.authResponse) {
+                                    FB.api('/me', function (response) {
+                                        //alert('Thank You '+ response.name +  ' You Can Vote Now');
+                                        swal(response.name, "Thank You You Can Vote Now", "success");
+                                    });
+
+                                } else {
+                                    sweetAlert("You Must Be Logged In To Vote", "You Can't Vote Now", "error");
+                                }
+                            }, {scope: 'email'});
+                        }
+                    });
+        }
+        function voteAjax(img, token) {
+            $.ajax({
+                type: "POST",
+                url: '{{ url('voting_upvote') }}?reference=' + img + '&value=1&token=' + token,
+                success: function (data) {
+                    $('#vote' + img).html(data);
+                    $('#vote' + img).css('color', '#000');
+                    $('#vote' + img).css('font-weight', 'bold');
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    console.log(xhr.responseText);
+                    console.log(textStatus);
+                    console.log(errorThrown);
+
+                }
+            });
+        }
+        $(document).ready(function () {
+            $("#lightgallery").galereya({
+                spacing: 0,
+                wave: false
+            });
+            $('footer').css('position','fixed');
+            $('footer').css('left','0');
+            $('footer').css('bottom','0');
+            $('footer').css('width','100%');
+            $('footer').css('overflow','hidden');
+        });
+    </script>
+
+{% endblock %}

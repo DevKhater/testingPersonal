@@ -1,0 +1,16 @@
+{% extends "YallaWebsiteBackendBundle:Venue:base_venue.html.twig" %}
+{% block controlleraction  %}
+    <div class="row">
+        <div class='col-md-12'>
+            <a href='{{ path ('backend_profile_edit')}}'><span class="label label-primary">Edit</span></a>
+        </div>
+    </div>
+    <div class='row'>
+        <div class='col-md-8'>
+            Name : {{entity.displayName}} 
+        </div>
+        <div class="col-md-4">
+            {% thumbnail  entity.media, 'small' %}
+        </div>
+    </div>
+{% endblock %}

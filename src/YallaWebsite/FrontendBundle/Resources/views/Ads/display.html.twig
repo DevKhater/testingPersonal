@@ -1,0 +1,40 @@
+{% if content.data|length > 1 %}
+    {# Output a carousel #}
+    <div class="carousel  slide" data-ride="carousel" data-interval="3000">
+        {# Carousel indicators #}
+{#        {% for i in 0..(content|length)-1 %}
+            {% if loop.first %}
+                <ol class="carousel-indicators">
+                {% endif %}
+                <li data-target=".carousel" data-slide-to="{{ i }}" {% if loop.first %}class="active"{% endif %}></li>
+                    {% if loop.last %}
+                </ol>
+            {% endif %}
+        {% endfor %}#}
+
+        {# Carousel items #}
+        {% for item in content.data %}
+            {% if loop.first %}
+                <div class="carousel-inner">
+                {% endif %}
+                <div class="item{% if loop.first %}  active{% endif %}">
+                    {% include '@YallaWebsiteFrontendBundle/views/Ads/_type.html.twig'  with {
+          type: item.type, 
+          item: item
+        } %}
+                </div>
+                {% if loop.last %}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    {# If there is a single item, include it #}
+{% else %}
+
+    {% include '@YallaWebsiteFrontendBundle/views/Ads/_type.html.twig' with {
+    type: (content.data|first).type, 
+    item: (content.data|first)
+  } %}
+
+{% endif %}

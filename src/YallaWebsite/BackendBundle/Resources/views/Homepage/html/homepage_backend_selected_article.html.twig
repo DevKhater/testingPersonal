@@ -1,0 +1,24 @@
+<h5><strong>Homepage Featured Article</strong></h5>
+<div class='col-md-12'>
+    <div style="float:left">
+        <select id="dd_one_article" class="form-control">
+            {% for entity in articles %}
+                <option value="{{entity.id}}">{{entity.title}} - {{entity.createdAt|date("Y-m-d")}}</option>
+            {% endfor %}
+        </select>
+        <a id='one_article' href='#' class='btn-sm btn-default'>Add Article To HomePage</a>
+    </div>
+</div>
+<br/><br/><br/>
+        <h5><strong>Homepage Other Articles</strong></h5>
+<div class='col-md-6 clearfix'>
+    <div style="float:left">
+        <h6>Select 4 Articles.</h6>
+        <div id='multiple_select_articles'>
+            {% for entity in articles %}
+                <input class="single-checkbox" type="checkbox" name="article" value="{{entity.id}}">  {{entity.title}} - {{entity.createdAt|date("Y-m-d")}}<br>
+            {% endfor %}
+            <a id='four_articles' href='#' class='btn-sm btn-default'>Add Articles To HomePage</a>
+        </div>
+    </div>
+</div><br/>

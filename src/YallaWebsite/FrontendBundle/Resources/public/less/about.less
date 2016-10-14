@@ -1,0 +1,39 @@
+#missionContent,#visionContent {
+    .bodyFontResizer;
+    min-height: 200px;
+    .make-xs-column(6);
+    @media screen and (max-width: 480px){
+        .make-xs-column(12);
+    }
+}
+
+#visionContent  { 
+    #vision_text{
+        border-left: 2px solid black;
+        padding-left: 29px;
+        clear: both;
+        @media screen and (max-width:480px) {
+            border-left: none;
+            padding-left: 0;
+        }
+    }
+}
+#membersContent { 
+    margin-top: 2%;
+    min-height: 200px;
+    .member_div{
+        margin: 0 auto; 
+        text-align: center;
+        width: 150px; 
+        height:150px; 
+        max-height: 150px;
+        margin-bottom: 2%;
+        .mediaIntoBG;
+        &:hover {
+            cursor: pointer;
+        }
+        @media only screen and (max-width : 992px) {
+            margin-bottom: 4%;
+        }
+    }
+}

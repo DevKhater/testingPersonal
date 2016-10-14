@@ -1,0 +1,11 @@
+backend_profile_index:
+    path:   /
+    defaults:  { _controller: YallaWebsiteBackendBundle:Profile:index }
+
+backend_profile_new:
+    path:   /new
+    defaults:  { _controller: YallaWebsiteBackendBundle:Profile:create }
+
+backend_profile_edit:
+    path:   /edit
+    defaults:  { _controller: YallaWebsiteBackendBundle:Profile:edit }

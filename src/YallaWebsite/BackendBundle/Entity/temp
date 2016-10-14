@@ -1,0 +1,47 @@
+
+    /**
+     * Bidirectional - Many comments are favorited by many users (INVERSE SIDE)
+     *
+     * @ORM\ManyToMany(targetEntity="Application\Sonata\MediaBundle\Entity\Gallery", inversedBy="photographers")
+     */
+    //private $photographerGalleries;
+
+
+
+
+    public function addPhotographerGallery(Application\Sonata\MediaBundle\Entity\Gallery $gallery)
+    {
+        $this->photographerGalleries[] = $gallery;
+    }
+
+    public function hasGallery(Application\Sonata\MediaBundle\Entity\Gallery $gallery)
+    {
+        return $this->getPhotographerGalleries()->contains($gallery);
+    }
+
+    public function addToGallery(Application\Sonata\MediaBundle\Entity\Gallery $gallery)
+    {
+        $gallery->addPhotographer($this);
+
+        $this->photographerGalleries[] = $gallery;
+    }
+
+    /**
+     * Remove photographers
+     *
+     * @param \YallaWebsite\BackendBundle\Entity\Photographer $photographers
+     */
+    public function removePhotographerGallery(Application\Sonata\MediaBundle\Entity\Gallery $gallery)
+    {
+        $this->photographerGalleries->removeElement($gallery);
+    }
+
+    /**
+     * Get photographers
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPhotographerGalleries()
+    {
+        return $this->photographerGalleries;
+    }

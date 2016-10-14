@@ -1,0 +1,29 @@
+{# empty Twig template #}
+{% extends "@YallaWebsiteFrontendBundle/views/front_base.html.twig" %}
+{% block body %}
+    <div class="wrapper">
+        <div id='missionContent' class="">
+            <div class="innerPagesTitle">
+                <h1>Mission</h1>
+            </div>
+            <div id="mission_text"><p>{{about}}</p></div>
+        </div>
+        <div id='visionContent' class="">
+            <div class="innerPagesTitle"><h1>Vision</h1></div>
+            {#<div id="left_border" style=""></div>#}
+            <div id="vision_text"><p>{{vision}}</p></div>
+        </div>
+        <div id='membersContent'>
+            <div class="innerPagesTitle" style="margin-bottom: 15px;">
+                <h1>Members</h1>
+            </div>
+            <div class="wrapper">
+                {% for member in members %} 
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" >
+                        <div onclick='window.open("{{member.website}}", "_blank")' class='member_div' style="background-image: url('{% path  member.media, 'displayIndex' %}');"></div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

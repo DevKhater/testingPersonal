@@ -1,0 +1,33 @@
+{% extends "YallaWebsiteBackendBundle:Member:base_member.html.twig" %}
+{% block controlleraction  %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Create Member
+        </div>
+
+        <div class="panel-body">
+            <form enctype="multipart/form-data" action="{{ path('backend_member_new')}}" method="POST">
+                <div class="form-group">
+                    <label for="name">Member Name</label>
+                    {{ form_widget(form.name)}}
+                </div>
+
+                <div class="form-group">
+                    <label for="date">Website</label>
+                    {{ form_widget(form.website)}}
+                </div>
+
+
+                <div class="form-group">
+                    <label for="media">Cover Image</label>
+                    {{ form_widget(form.media)}}
+                    <p class="help-block">Only Images.</p>
+                </div>
+                {{ form_errors(form) }}
+                {{ form_row(form._token) }}
+                <input type="submit" class="btn btn-default" value="Save"/>
+
+            </form>
+        </div>
+    </div>
+{% endblock %}

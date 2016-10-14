@@ -1,0 +1,35 @@
+<select id="dd_events" class="form-control">
+    <option>Select Event</option>
+    {% if (events)%}
+        {% for event in events %}
+            <option value="{{event.id}}">{{event.title}} - {{event.startDate|date("Y-m-d")}}</option>
+        {% endfor %}
+    {% endif %}
+</select>
+
+<span id='add_event_week' href='#' class='btn-sm btn-default'>Add Event To Day</span>
+
+<script>
+    $("#add_event_week").click(function (e) {
+        e.preventDefault();
+        var id = $("#dd_events").val();
+        var d = $("#dd_days").val();
+        $.ajax({
+            type: "POST",
+            url: Routing.generate('backend_ajax_set_events_for_day', {id: id, d: d}),
+            success: function (data) {
+                $('h4#ajaxTitle').text('Success');
+                $('#ajaxMessage p').text('Event Added To Homepage');
+                $('#ajaxResultMessages').modal('show');
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                console.log(xhr.responseText);
+                console.log(textStatus);
+                console.log(errorThrown);
+                $('h4#ajaxTitle').text('Error');
+                $('#ajaxMessage p').text(errorThrown);
+                $('#ajaxResultMessages').modal('show');
+            }
+        });
+    });
+</script>

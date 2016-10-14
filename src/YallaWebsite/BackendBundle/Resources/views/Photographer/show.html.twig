@@ -1,0 +1,16 @@
+{% extends "YallaWebsiteBackendBundle:Photographer:base_article.html.twig" %}
+{% block extraOptions %}
+    <a href='{{ path ('backend_article_edit', {'id': entity.id})}}'><button class="btn btn-primary create_new"><i class="fa fa-edit "></i> Edit</button></a>
+    <a href='{{ path ('backend_article_delete', {'id': entity.id})}}'><button class="btn btn-primary create_new"><i class="fa fa-edit "></i> Delete</button></a>
+{% endblock %}
+
+{% block controlleraction  %}
+    <div class="row">
+        <div class='col-md-12'>
+            <h3>{{entity.name}} </h3>
+            <h6>{{entity.website}} </h6>
+        </div>
+    </div>
+
+
+{% endblock %}

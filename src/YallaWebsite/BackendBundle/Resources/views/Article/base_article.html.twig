@@ -1,0 +1,53 @@
+{% extends "backend_base.html.twig" %}
+{% block title %}Articles Section{% endblock %}
+{% block stylesheets %}
+    <script src="{{ asset('assets/vendor/tinymce/tinymce.min.js') }}"></script>      
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <h4 class="page-head-line">Articles</h4>
+        </div>
+    </div>
+    <div>
+        <a href="{{ path ('backend_article_new')}}"><button class="btn btn-primary create_new"><i class="fa fa-edit "></i> Create Article</button></a>
+    {% block extraOptions %}{% endblock %}
+</div>
+{% block controlleraction %}{% endblock %}
+{% endblock %}
+
+
+{% block javascripts %}
+    <script src="{{ asset('assets/vendor/jquery-tagit/js/tag-it.min.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#article_tags").tagit({
+                allowSpaces: true
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block tinymce %}     
+    <script>
+        tinymce.init({
+            selector: '.tinymce',
+            theme: 'modern',
+            paste_data_images: true,
+            plugins: [
+                'advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker',
+                'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
+                'save table contextmenu directionality emoticons template paste textcolor'
+            ],
+            toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor emoticons',
+            media_live_embeds: true
+        });
+    </script>
+    {#    {{ tinymce_init({
+            theme: {'simple':{'language': app.request.locale, 'height': 500 }},
+            plugins: "media",
+            toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | media",
+            autosave_ask_before_unload: false})
+        }}#}
+{% endblock %}

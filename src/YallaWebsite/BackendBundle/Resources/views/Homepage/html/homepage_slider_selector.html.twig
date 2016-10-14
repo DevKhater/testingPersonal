@@ -1,0 +1,33 @@
+{% if class(ENT[0]) == 'Gallery' %}
+    <div style="float:left">
+        <h5>Add {{class(ENT[0])}} To Slider</h5>
+        <select id="dd_{{class(ENT[0])}}" class="form-control">
+            {% for entity in arr %}
+                <option value="{{entity.id}}">{{entity.name}}</option>
+            {% endfor %}
+        </select> 
+        <p>Position</p>
+        <select id='dd_p_{{class(ENT[0])}}' class='form-control'>
+            {% for i in 0..4 %}
+                <option value="{{i}}">{{i+1}}</option>
+            {% endfor %}
+        </select> 
+        <a id='{{class(ENT[0])}}' href='#' class='btn-sm btn-default'>Add To Slider</a>
+    </div>
+{% else %}
+    <div style="float:left">
+        <h5>Add {{class(ENT[0])}} To Slider</h5>
+        <select id="dd_{{class(ENT[0])}}" class="form-control">
+            {% for entity in arr %}
+                <option value="{{entity.id}}">{{entity.title}}</option>
+            {% endfor %}
+        </select> 
+        <p>Position</p>
+        <select id='dd_p_{{class(ENT[0])}}' class='form-control'>
+            {% for i in 0..4 %}
+                <option value="{{i}}">{{i+1}}</option>
+            {% endfor %}
+        </select> 
+        <a id='{{class(ENT[0])}}' href='#' class='btn-sm btn-default'>Add To Slider</a>
+    </div>
+{% endif %}

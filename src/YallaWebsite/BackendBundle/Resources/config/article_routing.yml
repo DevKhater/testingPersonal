@@ -1,0 +1,25 @@
+backend_article_index:
+    path:   /
+    defaults:  { _controller: YallaWebsiteBackendBundle:Article:index }
+
+backend_article_new:
+    path:   /new
+    defaults:  { _controller: YallaWebsiteBackendBundle:Article:new }
+
+backend_article_show:
+    path:   /show/{id}
+    defaults:  { _controller: YallaWebsiteBackendBundle:Article:show }
+    requirements: 
+          id: \d+
+          
+backend_article_edit:
+    path:   /edit/{id}
+    defaults:  { _controller: YallaWebsiteBackendBundle:Article:edit }
+    requirements: 
+          id: \d+
+
+backend_article_delete:
+    path: /delete/{id}
+    defaults:  { _controller: YallaWebsiteBackendBundle:Article:delete }
+    requirements: 
+          id: \d+

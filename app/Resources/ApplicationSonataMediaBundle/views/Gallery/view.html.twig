@@ -1,0 +1,144 @@
+{% extends "@YallaWebsiteFrontendBundle/views/front_base.html.twig" %}
+{% block meta %}
+<meta property="og:image" content="{% path gallery.media, 'large' %}" />
+{% endblock meta %}
+
+{% block stylesheets %}
+    {{parent()}}
+    <link rel="stylesheet" href="{{ asset('bundles/yallawebsitefrontend/css/sweetalert.css') }}" />
+    <link rel="stylesheet" href="{{ asset('bundles/yallawebsitefrontend/css/lightgallery.css') }}" />
+    <link rel="stylesheet" href="{{ asset('bundles/yallawebsitefrontend/css/gallery.css') }}" />
+{% endblock %}    
+
+{% block body %}
+    <div class="wrapper">
+        <div class="theEntityDiv">
+            <div class="innerTitle">
+                <h1>{{gallery.name}} {{gallery.date|date("d/m/Y")}}</h1>
+            </div>
+            <div id="innerEntityContent">
+                {{ gallery.description }}
+            </div>
+            <div id="galleryViewPhotogtapher">
+                {% if gallery.photographers is not empty %}
+                    <p><span>Photo Credit</span>: 
+                        {% for ph in gallery.photographers %}
+                            <a href='ph.website'>{{ph.name}}</a> {% if not loop.last %} - {% endif %} 
+                        {% endfor %}
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div style="clear:both">
+                <div class='the-gallery'>
+                    <div class="grid-sizer"></div>
+                    <ul id="lightgallery" class="list-unstyled row lister">    
+                        {% for galleryHasMedia in pagination %}
+                            <li class="col-xs-6 col-sm-4 col-md-3 item listS" 
+                                data-responsive="{% path galleryHasMedia.media, 'small' %} 375, {% path galleryHasMedia.media, 'medium' %} 480, {% path galleryHasMedia.media, 'large' %} 800" 
+                                data-src="{% path galleryHasMedia.media, 'xlarge' %}" 
+                                data-download-url="{{ path('sonata_media_download', {'id': galleryHasMedia.media |sonata_urlsafeid }) }}"
+                                id ="{{galleryHasMedia.media.id}}"
+                                data-sub-html="{% include '@YallaWebsiteFrontendBundle/views/Template/galleryImageUserInteraction.html.twig' with {'galleryID': gallery.slug, 'imageID':galleryHasMedia.media.id } %}">
+                                <a href=""><img class="img-responsive" src="{% path galleryHasMedia.media, 'small' %}"></a>
+                            </li>
+                        {% endfor %}
+                        {#<div id='chocolat-image-data-adv' class="Adv_Display">{{ render_esi(url('ads_manager_show', { 'id': 'snapshot_popup' })) }}</div>#}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class='row' style="clear:both">
+            <div class="page_pagination">
+                {% if (pagination) %}
+                    {{ knp_pagination_render(pagination, 'YallaWebsiteFrontendBundle:Template:pagination.html.twig') }}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block massonary %}
+    {% javascripts '@massonary' '@imagesloaded'%}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    <script src="{{ asset('bundles/yallawebsitefrontend/js/sweetalert.min.js') }}"></script>
+    <script src="{{ asset('bundles/yallawebsitefrontend/js/rating.js') }}"></script>
+    <script type="text/javascript">
+        function fb_login() {
+            var gID = {{gallery.id}};
+                    FB.getLoginStatus(function (response) {
+                        if (response.status === 'connected') {
+                            var uid = response.authResponse.userID;
+                            var img = $('.fb_vote span').attr('id');
+                            var token = uid + '-' + gID + '-' + img;
+                            voteAjax(img, token);
+                        } else {
+                            // not_authorized
+                            FB.login(function (response) {
+                                if (response.authResponse) {
+                                    FB.api('/me', function (response) {
+                                        //alert('Thank You '+ response.name +  ' You Can Vote Now');
+                                        swal(response.name, "Thank You You Can Vote Now", "success");
+                                    });
+
+                                } else {
+                                    sweetAlert("You Must Be Logged In To Vote", "You Can't Vote Now", "error");
+                                }
+                            }, {scope: 'email'});
+                        }
+                    });
+        }
+        function voteAjax(img, token) {
+            $.ajax({
+                type: "POST",
+                url: '{{ url('voting_upvote') }}?reference=' + img + '&value=1&token=' + token,
+                success: function (data) {
+                    $('#vote' + img).html(data);
+                    $('#vote' + img).css('color', '#000');
+                    $('#vote' + img).css('font-weight', 'bold');
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    console.log(xhr.responseText);
+                    console.log(textStatus);
+                    console.log(errorThrown);
+
+                }
+            });
+        }
+        $(document).ready(function () {
+            $('#lightgallery').lightGallery({
+                thumbnail: false,
+                counter: false,
+                hideBarsDelay: 400
+            });
+            var $grid = $('.the-gallery').masonry({
+                itemSelector: '.listS',
+                percentPosition: true,
+                columnWidth: '.grid-sizer'
+            });
+            $grid.imagesLoaded().progress(function () {
+                $grid.masonry();
+            });
+/*
+ $(document).on("click",".lg-img-wrap img",function(){
+              console.log('togglllleee');
+              $(".lg-actions").toggle();
+            });   */
+        });
+        
+    </script>
+    <script src="https://cdn.jsdelivr.net/picturefill/2.3.1/picturefill.min.js"></script>
+    <script src="{{ asset('bundles/yallawebsitefrontend/js/lightgallery.js') }}"></script>
+    <script src="{{ asset('bundles/yallawebsitefrontend/js/lg-fullscreen.js') }}"></script>
+    <script src="{{ asset('bundles/yallawebsitefrontend/js/lg-thumbnail.js') }}"></script>
+    <script src="{{ asset('bundles/yallawebsitefrontend/js/lg-video.js') }}"></script>
+    <script src="{{ asset('bundles/yallawebsitefrontend/js/lg-autoplay.js') }}"></script>
+    <script src="{{ asset('bundles/yallawebsitefrontend/js/lg-zoom.js') }}"></script>
+    <script src="{{ asset('bundles/yallawebsitefrontend/js/lg-hash.js') }}"></script>
+    <script src="{{ asset('bundles/yallawebsitefrontend/js/lg-pager.js') }}"></script>
+    <script src="{{ asset('bundles/yallawebsitefrontend/js/jquery.mousewheel.min.js') }}"></script>
+
+{% endblock %}

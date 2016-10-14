@@ -1,0 +1,56 @@
+home_header_first:
+    cache_public: true
+    cache_shared_max_age: 86400
+    cache_max_age: 28800
+    random: true
+    format: horiz
+    media: 445
+    data: [{ type: image, link: 'http://yallabreak.com/__demo/__Sym/web/uploads/media/adv/0001/01/thumb_445_adv_horiz.jpeg', target: 'http://www.hotmail.com/', weight: 5 }, { type: image, link: 'http://yallabreak.com/__demo/__Sym/web/uploads/media/adv/0001/01/thumb_451_adv_horiz.jpeg', target: 'http://www.gmail.com/', weight: 5 }, { type: image, link: 'http://yallabreak.com/__demo/__Sym/web/uploads/media/adv/0001/01/thumb_52_adv_horiz.jpeg', target: 'http://www.google.com/', weight: 5 }, { type: image, link: 'http://yallabreak.com/__demo/__Sym/web/uploads/media/adv/0001/01/thumb_52_adv_horiz.jpeg', target: 'http://www.google.com/', weight: 5 }, { type: image, link: 'http://yallabreak.com/__demo/__Sym/web/uploads/media/adv/0001/01/thumb_52_adv_horiz.jpeg', target: 'http://www.google.com/', weight: 5 }]
+home_header_second:
+    cache_public: true
+    cache_shared_max_age: 86400
+    cache_max_age: 28800
+    random: true
+    format: horiz
+    media: 52
+    data: [{ type: image, link: 'http://yallabreak.com/__demo/__Sym/web/uploads/media/adv/0001/01/thumb_52_adv_horiz.jpeg', target: 'http://www.google.com/', weight: 5 }]
+home_body_first:
+    cache_public: true
+    cache_shared_max_age: 86400
+    cache_max_age: 28800
+    random: true
+    format: verti
+    media: 57
+    data: [{ type: image, link: 'http://yallabreak.com/__demo/__Sym/web/uploads/media/adv/0001/01/thumb_57_adv_verti.jpeg', target: 'http://www.google.com/', weight: 5 }, { type: image, link: 'http://yallabreak.com/__demo/__Sym/web/uploads/media/adv/0001/01/thumb_452_adv_verti.gif', target: 'http://www.test.com/', weight: 5 }, { type: image, link: 'http://yallabreak.com/__demo/__Sym/web/uploads/media/adv/0001/01/thumb_57_adv_verti.jpeg', target: 'http://www.google.com/', weight: 5 }]
+home_body_second:
+    cache_public: true
+    cache_shared_max_age: 86400
+    cache_max_age: 28800
+    random: true
+    format: verti
+    media: 56
+    data: [{ type: image, link: 'http://yallabreak.com/__demo/__Sym/web/uploads/media/adv/0001/01/thumb_56_adv_verti.jpeg', target: 'http://www.google.com/', weight: 5 }]
+home_footer_first:
+    cache_public: true
+    cache_shared_max_age: 86400
+    cache_max_age: 28800
+    random: true
+    format: horiz
+    media: 53
+    data: [{ type: image, link: 'http://yallabreak.com/__demo/__Sym/web/uploads/media/adv/0001/01/thumb_53_adv_horiz.jpeg', target: 'http://www.google.com/', weight: 5 }]
+home_footer_second:
+    cache_public: true
+    cache_shared_max_age: 86400
+    cache_max_age: 28800
+    random: true
+    format: horiz
+    media: 54
+    data: { 0: { type: image, link: 'http://yallabreak.com/__demo/__Sym/web/uploads/media/adv/0001/01/thumb_54_adv_horiz.jpeg', target: 'http://www.google.com/', weight: 5 }, 4: { link: 'http://yallabreak.com/__demo/__Sym/web/uploads/media/adv/0001/01/thumb_454_adv_horiz.jpeg', target: 'http://www.test.com/', type: image } }
+snapshot_popup:
+    cache_public: true
+    cache_shared_max_age: 86400
+    cache_max_age: 28800
+    random: true
+    format: snapadv
+    media: 55
+    data: [{ type: image, link: 'http://yallabreak.com/__demo/__Sym/web/uploads/media/adv/0001/01/thumb_55_adv_snapadv.jpeg', target: 'http://www.google.com/', weight: 5 }]

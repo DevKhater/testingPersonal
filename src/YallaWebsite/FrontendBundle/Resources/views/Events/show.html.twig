@@ -1,0 +1,50 @@
+{% extends "@YallaWebsiteFrontendBundle/views/front_base.html.twig" %}
+{% block meta %}
+<meta property="og:image" content="{% path entity.media, 'large' %}" />
+{% endblock meta %}
+
+{% block body %}
+    <div class="wrapper">
+        {%  if (entity) %}
+            <div class="theEntityDiv">
+                <div class="innerTitle">
+                    <h1>{{entity.title}}</h1>
+                </div>
+
+                <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7" style="padding-right: 0;">
+                    <div id="innerEntityImage" class="event_innerEntityImage">
+                        {% thumbnail entity.media, 'large' with {'class': 'img-responsive'} %}
+                    </div>
+                </div>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5" >
+                    <div id="innerEventInformation">
+                        {% if entity.startDate|date("F jS") ==  entity.endDate|date("F jS") %} 
+                            <strong>Date : </strong>{{entity.startDate|date("F jS Y")}}<br/>
+                            Start : {{entity.startDate|date("g:ia")}}<br/>
+                            End : {{entity.endDate|date("g:ia")}}<br/>
+                        {% else %}
+                            <strong>Start Date : </strong>{{entity.startDate|date("F jS Y \\a\\t g:ia")}} <br/>
+                            <strong>End Date : </strong>{{entity.endDate|date("F jS Y \\a\\t g:ia")}} <br/>
+                        {% endif %}
+                        {% if entity.isVenue == true %}
+                            <strong>Venue : </strong> <a href="{{entity.venue.website}}">{{ entity.venue.title }}</a><br />
+                            <strong>Address : </strong>{{ entity.venue.location.address }} <br/>
+                            <strong>Telephone : </strong>{{ entity.venue.location.telephone }} <br/>
+                        {% else %}
+                            <strong>Address : </strong>{{ entity.location.address }} <br/>
+                            <strong>Telephone : </strong>{{ entity.location.telephone }} <br/>
+                        {% endif %}
+                        <div class='socialMediaShareDiv' style="margin-top: 15px;">
+                            {% include '@YallaWebsiteFrontendBundle/views/Template/entitiesSocialMediaShare.html.twig' with {'name': entity.title,} %}
+                        </div>
+                    </div>
+                </div>
+                <div class="wrapper">
+                    <div id="innerEntityContent" class="resp_font">
+                        <p>{{ entity.content }}</p> 
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -1,0 +1,19 @@
+fos_elastica:
+    clients:
+        default: { host: localhost/, port: 9200 }
+    indexes:
+        app:
+            types:
+                article:
+                    mappings:
+                        id:
+                            type: integer
+                        title: ~
+                        content: ~
+                    persistence:
+                        driver: orm
+                        model: YallaWebsite\BackendBundle\Entity\Article
+                        provider: ~
+                        listener: 
+                            immediate: ~
+                        finder: ~

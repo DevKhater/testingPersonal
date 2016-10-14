@@ -1,0 +1,21 @@
+hwi_oauth:
+    # list of names of the firewalls in which this bundle is active, this setting MUST be set
+    firewall_names: [secured_area]
+    resource_owners:
+        facebook:
+            type:                facebook
+            client_id:           516228625234128
+            client_secret:       41990cb594420495744dd2e0aa378657
+            scope:         "email"
+            infos_url:     "https://graph.facebook.com/me?fields=id,name,email,picture.type(square)"
+            paths:
+                email:          email
+                profilepicture: picture.data.url
+            firewall_name: secured_area
+            connect: ~
+            options:
+                csrf: true
+                auth_type: rerequest # Re-asking for Declined Permissions
+services:
+    hwi_oauth.user.provider.entity:
+        class: HWI\Bundle\OAuthBundle\Security\Core\User\OAuthUserProvider

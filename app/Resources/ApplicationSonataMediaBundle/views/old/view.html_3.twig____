@@ -1,0 +1,192 @@
+{% extends "@YallaWebsiteFrontendBundle/views/front_base.html.twig" %}
+{% set tempArray = {} %}
+{% block stylesheets %}
+    {{parent()}}
+    <link rel="stylesheet" href="{{ asset('bundles/yallawebsitefrontend/css/sweetalert.css') }}" />
+    <link rel="stylesheet" href="{{ asset('bundles/starrating/css/rating.css') }}" />
+    <link rel="stylesheet" href="{{ asset('bundles/yallawebsitefrontend/css/fullscreenstyle.css') }}" />
+{% endblock %}    
+
+{% block body %}
+    <div class="wrapper">
+        <div class="theEntityDiv">
+            <div class="innerTitle">
+                <h1>{{gallery.name}} {{gallery.date|date("d/m/Y")}}</h1>
+            </div>
+            <div id="innerEntityContent">
+                {{ gallery.description }}
+            </div>
+            <div id="galleryViewPhotogtapher">
+                {% if gallery.photographers is not empty %}
+                    <p><span>Photo Credit</span>: 
+                        {% for ph in gallery.photographers %}
+                            <a href='ph.website'>{{ph.name}}</a> {% if not loop.last %} - {% endif %} 
+                        {% endfor %}
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row" id='gallery_new_test'>
+            {% for galleryHasMedia in pagination %}
+                <div class="image item mediaIntoBG {% if galleryHasMedia.media.height < galleryHasMedia.media.width %}galleryImageHoriz{% else %}galleryImageVert{% endif %}" style="background-image: url('{% path  galleryHasMedia.media, 'medium' %}');"> 
+                    <a rel="gallery" title="{{gallery.name}}" href="{% path galleryHasMedia.media, 'xlarge' %}">
+                        <img class='test_im' src="{% path galleryHasMedia.media, 'small' %}" class='img-responsive' style="display:none">
+                        <i class="fa fa-search" aria-hidden="true" style="color:white;font-weight: bold; font-size: 20px;float:right;position: absolute; top: 5px; right: 5px"></i>
+                    </a>
+                    <div class='image_download'>
+                        <a href="{{ path('sonata_media_download', {'id': galleryHasMedia.media|sonata_urlsafeid }) }}">Download Image</a>
+                    </div>
+                    <div class="image_hover" style="background: rgba(0,0,0,0.2);">
+                        {% include "@YallaWebsiteFrontendBundle/views/Template/galleryImageUserInteraction.html.twig" with {'galleryID': gallery.slug, 'imageID':galleryHasMedia.media.id } %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="page_pagination">
+            {% if (pagination) %}
+                {{ knp_pagination_render(pagination, 'YallaWebsiteFrontendBundle:Template:pagination.html.twig') }}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block massonary %}
+    <script type="text/javascript" src="{{ asset('bundles/yallawebsitefrontend/js/socialite.min.js') }}"></script>
+    <script src="{{ asset('bundles/yallawebsitefrontend/js/sweetalert.min.js') }}"></script>
+    <script src="{{ asset('bundles/starrating/js/rating.js') }}"></script>
+    <script src="{{ asset('bundles/yallawebsitefrontend/js/jquery.fullscreenslides.js') }}"></script>
+    <script src="https://cdn.rawgit.com/bigbitecreative/macy.js/master/dist/macy.js"></script>
+    <script>
+        function fb_login(img) {
+            var gID = {{gallery.id}};
+            FB.getLoginStatus(function (response) {
+                if (response.status === 'connected') {
+                    var uid = response.authResponse.userID;
+                    var token = uid + '-' + gID + '-' + img;
+                    voteAjax(img, token);
+                } else {
+                    // not_authorized
+                    FB.login(function (response) {
+                        if (response.authResponse) {
+                            FB.api('/me', function (response) {
+                                swal(response.name, "Thank You You Can Vote Now", "success");
+                            });
+                        } else {
+                            sweetAlert("You Must Be Logged In To Vote", "You Can't Vote Now", "error");
+                        }
+                    }, {scope: 'email'});
+                }
+            });
+        }
+        function voteAjax(img, token) {
+            $.ajax({
+                type: "POST",
+                url: '{{ url('voting_upvote') }}?reference=' + img + '&value=1&token=' + token,
+                success: function (data) {
+                    $('.image_hover #vote' + img + ' span').first().html(data);
+                    $('.image_hover #vote' + img).css('color', '#fff');
+                },
+                error: function (xhr, textStatus, errorThrown) {}
+            });
+        }
+        
+        function mediaQueryResizer() {
+        if ($(window).width()>768) {
+                $(".galleryImageHoriz").css('min-height','200px');
+                $(".galleryImageHoriz").css('height','200px');
+                $(".galleryImageHoriz").css('max-height','200px');
+                $(".galleryImageVert").css('min-height','400px');
+                $(".galleryImageVert").css('height','400px');
+                $(".galleryImageVert").css('max-height','400px');
+            } else if ($(window).width()<768 && $(window).width()>425) {
+                $(".galleryImageHoriz").css('min-height','100px');
+                $(".galleryImageHoriz").css('height','100px');
+                $(".galleryImageHoriz").css('max-height','100px');
+                $(".galleryImageVert").css('min-height','200px');
+                $(".galleryImageVert").css('height','200px');
+                $(".galleryImageVert").css('max-height','200px');
+            }
+        }
+        $(document).ready(function () {
+            $(function () {
+                // initialize the slideshow
+                $('.image img.test_im').fullscreenslides();
+                // All events are bound to this container element
+                var $container = $('#fullscreenSlideshowContainer');
+                $container.bind("init", function () {
+                    // The slideshow does not provide its own UI, so add your own
+                    // // check the fullscreenstyle.css for corresponding styles
+                    $container.append('<div class="ui" id="fs-close">&times;</div>')
+                            .append('<div class="ui" id="fs-loader">{% image "@YallaWebsiteFrontendBundle/Resources/public/images/ajax-loader.gif" %}<img id="gallery_loader" src="{{ asset_url }}" alt="Loading" />{% endimage %}</div>')
+                            .append('<div class="ui" id="fs-prev">&lt;</div>')
+                            .append('<div class="ui" id="fs-next">&gt;</div>')
+                            .append('<div class="ui" id="fs-caption"><span></span></div>');
+                    // Bind to the ui elements and trigger slideshow events
+                    $('#fs-prev').click(function () {
+                        // You can trigger the transition to the previous slide
+                        $container.trigger("prevSlide");
+                    });
+                    $('#fs-next').click(function () {
+                        // You can trigger the transition to the next slide
+                        $container.trigger("nextSlide");
+                    });
+                    $('#fs-close').click(function () {
+                        // You can close the slide show like this:
+                        $container.trigger("close");
+                    });
+                })
+                // When a slide starts to load this is called
+                        .bind("startLoading", function () {
+                            // show spinner
+                    $('#fs-loader').show();
+                })
+                // When a slide stops to load this is called:
+                        .bind("stopLoading", function () {
+                            // hide spinner
+                    $('#fs-loader').hide();
+                })
+                // When a slide is shown this is called.
+                // // The "loading" events are triggered only once per slide.
+                // // The "start" and "end" events are called every time.
+                // // Notice the "slide" argument:
+                        .bind("startOfSlide", function (event, slide) {
+                            // set and show caption
+                    $('#fs-caption span').text(slide.title);
+                    $('#fs-caption').show();
+                })
+                // before a slide is hidden this is called:
+                        .bind("endOfSlide", function (event, slide) {
+                            $('#fs-caption').hide();
+                });
+            });
+            $(window).on('resize', mediaQueryResizer())
+            mediaQueryResizer();
+            
+        Macy.init({
+            container: '#gallery_new_test',
+            trueOrder: false,
+            waitForImages: false,
+            margin: 0,
+            columns: 5,
+            breakAt: {
+                1200: 5,
+                940: 4,
+                520: 3,
+                400: 2
+            }
+        });
+        Macy.onImageLoad(null, function () {
+            Macy.recalculate();
+        });
+    });
+    </script>	
+
+    <style>
+        #fullscreenSlideshowContainer {
+            top: 50%;
+            left: 50%;
+        }
+    </style>
+{% endblock %}

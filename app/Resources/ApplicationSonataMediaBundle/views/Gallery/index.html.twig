@@ -1,0 +1,36 @@
+ {% extends "@YallaWebsiteFrontendBundle/views/front_base.html.twig" %}
+{% block body %}
+        <div class="wrapper">
+
+        <div class="IndexTitle">
+            <h1>Captured Moments</h1>
+        </div>
+        {% for gallery in pagination  %}
+            <div class="galleryDiv">
+                <a href="{{ url('sonata_media_gallery_view', {'id' : gallery.slug }) }}">
+                    <div class="galleryContent" style="background-image: url('{% path gallery.media, 'displayIndex' %}')">
+                    <div class="galleryDivTitle">
+                        <div class='galleryDivTitleContent'>
+                        	{% if gallery.name | length > 32 %}
+                        	<h3 style='font-size: 18px;'>{{ gallery.name }}</h3>
+                        	{% else %}
+                        	<h3>{{ gallery.name }}</h3>
+                        	{% endif %}
+                            <h5>{{ gallery.date|date("d/m/Y") }}</h5>
+                        </div>
+                    </div>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+
+
+        <div class="page_pagination">
+
+            {% if (pagination) %}
+                {{ knp_pagination_render(pagination, 'YallaWebsiteFrontendBundle:Template:pagination.html.twig') }}
+            {% endif %}
+        </div>
+    </div>
+    
+{% endblock %}

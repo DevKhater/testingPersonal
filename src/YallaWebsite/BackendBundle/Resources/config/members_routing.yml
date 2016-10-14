@@ -1,0 +1,22 @@
+backend_member_index:
+    path:   /
+    defaults:  { _controller: YallaWebsiteBackendBundle:Member:index }
+
+backend_member_new:
+    path:   /new
+    defaults:  { _controller: YallaWebsiteBackendBundle:Member:new }
+backend_member_show:
+    path:   /show/{id}
+    defaults:  { _controller: YallaWebsiteBackendBundle:Member:show }
+    requirements: 
+          id: \d+
+backend_member_edit:
+    path:   /edit/{id}
+    defaults:  { _controller: YallaWebsiteBackendBundle:Member:edit }
+    requirements: 
+          id: \d+
+backend_member_delete:
+    path: /delete/{id}
+    defaults:  { _controller: YallaWebsiteBackendBundle:Member:delete }
+    requirements: 
+          id: \d+

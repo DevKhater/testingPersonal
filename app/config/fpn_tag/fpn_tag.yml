@@ -1,0 +1,3 @@
+dcs_tag:
+    db_driver: orm
+    model: YallaWebsite\BackendBundle\Entity\Tag    

@@ -1,0 +1,63 @@
+{% extends "YallaWebsiteBackendBundle:AdsManager:base_adv.html.twig" %}
+{% block controlleraction  %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    Advertisment Information
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    Advertisment Listing
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <style>
+                            table tbody tr {
+                                height: 70px;
+                            }
+                        </style>
+                        <table class="table table-striped table-bordered table-hover zebra" style="text-align: center; overflow: hidden">
+                            <thead>
+                                <tr style="height: 70px">
+                                    <th></th>
+                                    <th style="vertical-align: middle;">Select Adv<span></span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for key,value in content %}
+                                    <tr>
+                                        <td style="vertical-align: middle;text-align: center;">  
+                                            {{key| title| replace({'_': ' '})}}
+                                        </td>
+                                        <td style="vertical-align: middle;text-align: center;">
+                                            {%for i in 0..4 %}
+                                                <div style="float:left; display: inline-block;margin-right: 5px;">
+                                                <a href="{{path ('backend_ads_manager_change',  {'id': key, 'index': i}) }}"><button class="btn btn-danger btn-sm">{{ i + 1}}</button></a>
+                                            
+                                                {% if value.data[i] is defined %}
+                                                    {% include '@YallaWebsiteBackendBundle/views/AdsManager/_type.html.twig' with {
+                                                    type: (value.data|first).type, 
+                                                    item: (value.data[i]) } %}
+                                                {% endif %}
+                                                </div>
+                                               {%endfor%}
+                                            
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>        
+    </div>
+{% endblock %}

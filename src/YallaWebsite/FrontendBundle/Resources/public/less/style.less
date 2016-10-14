@@ -1,0 +1,449 @@
+/* 
+    Created on : May 3, 2016, 8:39:50 PM
+    Author     : Michel Khater
+*/
+
+@import "bootstrap/bootstrap.less";
+@import "MixandVar.less";
+@import "adv.less";
+
+
+.rotateLogo() {
+        position: fixed; /* or absolute */
+        top: 50%;
+        left: 50%;
+        border-radius: 50%;
+        width: 120px;
+        height: 120px;
+        margin-top: -60px;
+        margin-left: -60px;
+        animation: spin 2s linear infinite;
+}
+@keyframes spin {
+    0% { transform: rotate(360deg); }
+    100% { transform: rotate(0deg); }
+}
+
+.loader {
+    background-color: @Color2;
+    z-index: 10000;
+    background-color: rgba(0,0,0,1);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    img {
+        .rotateLogo();
+    }
+}
+
+.innerPagesTitle {
+    .make-lg-column(12);
+    .make-md-column(12);
+    .make-sm-column(12);
+    .make-xs-column(12);
+    text-align: center;
+    color: @Color2;
+    h1 {
+        font-weight: bold;
+        display: inline-block;
+        border-bottom: 3px solid @Color3;
+        .fontResizer();
+    }
+    .longerTitle {
+        font-weight: bold;
+        display: inline-block;
+        border-bottom: 3px solid @Color3;
+        .longFontResizer();
+    }
+}
+.navbar-brand {
+    text-transform: uppercase;
+    font-weight: 900;
+    letter-spacing: 2px;
+    img {
+        position: absolute;
+        @media screen and (max-width: 480px){
+            top: -25%;
+            height: 80px;
+        }
+        @media screen and (min-width: 480px) and (max-width: 767px){
+            top: -32%;
+            height: 90px;
+        }
+        @media screen and (min-width: 768px){
+            display:none;
+        }
+    }
+}
+
+.navbar-nav {
+    text-transform: uppercase;
+    font-weight: 400;
+    @media screen and (min-width:768px) {
+        display: table;
+        float: none;
+        margin: 0 auto;
+        table-layout: fixed;
+        font-size: 1.1em;
+    }
+}
+@media screen and (min-width:768px) {
+    .navbar {
+        border-radius: 0;
+        min-height: 0;
+    }
+
+    .navbar-header {
+        display: none;
+    }
+}
+.page_pagination {
+    .make-lg-column(12);
+    .make-md-column(12);
+    .make-sm-column(12);
+    .make-xs-column(12);
+    text-align: center;
+    margin-bottom: 15px;
+}
+.pagination_image {
+    color: @Color1;
+    background-color: @Color1;
+    border-color: @Color1;
+    margin-top: -5px;
+    &:hover {
+        z-index: 2;
+        color: @Color1;
+        background-color: @Color1;
+        border-color: @Color1;
+    }
+}
+.pagination_round_border {
+    span {
+        height: 34px;
+        z-index: 2;
+        color: @Pagination-Gray;
+        background-color: @Pagination-Gray;
+        border-color: @Pagination-Gray;
+        border-color: @Pagination-Gray;
+        border: 1px solid @Pagination-Gray;
+        &:hover {
+            height: 34px;
+            z-index: 2;
+            color: @Pagination-Gray;
+            background-color: @Pagination-Gray;
+            border-color: @Pagination-Gray;
+            border-color: @Pagination-Gray;
+            border: 1px solid @Pagination-Gray;
+        }
+    } 
+}
+#menuImageLogo {
+    z-index: 2;
+    img {
+        height: 150px;
+        width: 150px;
+        margin-top: -30px;
+    }
+}
+#menuImageLogo {
+    @media screen and (max-width:767px) {
+        display:none;
+    }
+}
+
+body {
+    background-color: @Color1;
+    overflow-x: hidden;
+    header {
+        background-color: @Color1;
+        font-family: 'CenturyGothicBold';
+        #preHeader{
+            height:15px;
+            background-color: @Color1;
+        }
+        nav {
+            .navbar;
+            .navbar-default;
+            background-color: @Color2;
+            border-bottom: 2px solid @Color3;
+            #bs-navbar-collapse-1 {
+                max-height: 88px;
+                ul {
+                    li{
+                        height: 88px;
+                        min-height: 88px;
+                        @media only screen and (max-width : 320px) { 
+                            max-height: 20px; 
+                            height: 14px; 
+                            text-align:center; 
+                            &:hover {
+                                background-color: @Color2;
+                                a {
+                                    background-color: @Color1;
+                                    color:black;
+                                }
+                            }
+                        }
+                        @media only screen and (max-width : 767px) { 
+                            min-height: 14px; 
+                            height: 14px; 
+                            text-align:center; 
+                            &:hover {
+                                background-color: @Color2;
+                                a {
+                                    background-color: @Color1;
+                                    color:black;
+                                }
+                            }
+                        }
+                        a{
+                            color:white;
+                            padding: 35px;
+                            line-height: normal;
+                            letter-spacing: 7px;
+                            @media screen and (min-width:1500px) { padding: 25px; }
+                            @media screen and (max-width:1500px) { padding: 25px; }
+                            @media screen and (max-width:1435px) { padding: 19px; padding-top: 30px;}
+                            @media screen and (max-width:1315px) { padding: 15px; padding-top: 30px;}
+                            @media screen and (max-width:1260px) { padding: 9px; padding-top: 30px;}
+                            @media screen and (max-width:1155px) { padding: 7px; padding-top: 30px;}
+                            @media screen and (max-width:1122px) { padding: 7px; letter-spacing: 5px; padding-top: 30px;}
+                            @media screen and (max-width:1080px) { padding: 11px; letter-spacing: 4px; padding-top: 35px;}
+                            @media screen and (max-width:1035px) { padding: 6px; letter-spacing: 5px; padding-top: 35px;}
+                            @media screen and (max-width:1004px) { padding: 6px; letter-spacing: 3px; padding-top: 35px;}
+                            @media screen and (max-width:985px) { padding: 12px; letter-spacing: 2px; padding-top: 35px;}
+                            @media screen and (max-width:948px) { padding: 6px; letter-spacing: 2px; padding-top: 35px;}
+                            @media screen and (max-width:860px) { padding: 10px; letter-spacing: 0.5px;padding-top: 30px;}
+                            @media screen and (max-width:845px) { padding: 8px; letter-spacing: 1px;padding-top: 35px;}
+                            @media screen and (max-width:832px) { padding: 5px; letter-spacing: 1px;padding-top: 35px;}
+                            @media screen and (max-width:800px) { padding: 3px; letter-spacing: 1px;padding-top: 40px;}
+                            @media screen and (max-width:767px) { padding: 5px; letter-spacing: none;padding-top: 29px;}
+                            @media screen and (max-width:425px) { padding: 5px; letter-spacing: none;padding-top: 0;}
+                        }
+                        &:hover {
+                            background-color: @Color1;
+                            a {
+                                color:black;
+                            }
+                        }
+                    } 
+                }
+            }
+        }
+
+        #socialSearchRow{
+            .row();
+            min-height: 50px;
+            #socialLinks,#searchBar {
+                .make-xs-column(6);
+                min-height: 20px;
+                margin-top: 1%;
+                margin-left: 3%;
+                @media only screen and (max-width : 480px) {
+                    .make-xs-column(12);
+                    margin:0 auto;
+                    text-align:center;  
+                    padding-bottom: 2%;
+                }
+            }
+            #socialLinks {
+                float: left;
+                margin: 0 auto;
+                @media only screen and (max-width : 480px) {}
+                #socialLinksTitle {
+                    h5 {
+                        text-align: center;
+                    }
+                }
+                #socialLinksIcons {
+                    text-align: center;
+                    a {
+                        text-decoration: none;
+                        img {
+                            .socialMediaIcons;
+                        }
+                    }
+                }
+            }
+            #searchBar {
+                float: right;
+                margin-left: 0;
+            }
+            @media only screen and (max-width : 480px) {}
+        }
+    }
+    .pageContent{
+        font-family: 'Ebrima';
+        .row();
+        //VenuesPage
+        .wrapper {
+            min-width: 80%;
+            max-width: 80%;
+            width: 80%;
+            margin: 0 auto;
+            .clearfix;
+            min-height: 100px;
+            //All Inner Pages Defaults
+            .IndexTitle {
+                .innerPagesTitle;
+            }
+            .venueDiv {
+                .make-lg-column(6);
+                .make-md-column(6);
+                .make-sm-column(6);
+                .make-xs-column(6);
+                margin-bottom: 2%;
+                text-align: center;
+                .venueContent{
+                    .mediaIntoBG;
+                    border-radius: 5px;
+                    height: 250px;
+                    max-height: 250px;
+                    cursor: pointer;
+                    @media only screen and (max-width: 320px){
+                        height: 125px;
+                        max-height: 125px;
+                    }
+                    @media only screen and (min-width: 320px) and (max-width: 425px){
+                        height: 125px;
+                        max-height: 125px;
+                    }
+                    .venueDivTitle {
+                        font-weight: bold;
+                        border-top-right-radius: 5px;
+                        border-top-left-radius: 5px;
+                        width: 100%;
+                        height: 40px;
+                        background-color: rgba(26,26,26, 0.5);
+                        font-size: 30px;
+                        color: white;
+                        .bodyFontResizer;   
+                    }
+                }
+                .modal-dialog {
+                    .modal-content {
+                        color: white;
+                        background-color: @Color5;
+                        .modal_title {
+                            text-align: center;
+
+                        }
+                        .modal_description, .modal_footer {
+                            text-align:left;
+                            padding: 2%;
+                        }
+                        .modal_description{
+                            .artist_upcoming_events {
+                                span {
+                                    color: @Color3;
+                                    font-style: italic;
+                                    font-weight: bold;
+                                    .hyperlink();
+                                }
+                            }
+                        }
+                        .modal_footer{
+                            .hyperlink();
+                        }
+                    }
+                }
+            }
+
+            //Index Article Page
+            .articleDiv {
+                .make-lg-column(4);
+                .make-md-column(4);
+                .make-sm-column(6);
+                .make-xs-column(6);
+                margin-bottom: 2%;
+                text-align: center;
+                .articleContent{
+                    .mediaIntoBG;
+                    border-radius: 5px;
+                    min-height: 250px;
+                    @media only screen and (max-width: 768px) {
+                        min-height: 125px;
+                    }
+                    .articleDivTitle {
+                        display:none;
+                        font-weight: bold;
+                        border-top-right-radius: 5px;
+                        border-top-left-radius: 5px;
+                        width: 100%;
+                        height: 40px;
+                        background-color: rgba(26,26,26, 0.5);
+                        font-size: 30px;
+                        color: white;
+                        .bodyFontResizer;
+                    }
+                    &:hover {
+                        .articleDivTitle {
+                            display: block;
+                        }
+                    }
+
+                }
+                .theArticleContent{
+                    text-align: left;
+                    .hyperlink();
+                }
+            }
+            //ENDOF Index Article Page
+
+
+        }
+    }
+}
+
+@import "homepage.less";
+@import "about.less";
+@import "calendar.less";
+@import "artist.less";
+@import "gallery.less";
+
+footer{
+    #footerContent {
+        .make-lg-column(12);
+        .make-md-column(12);
+        .make-sm-column(12);
+        .make-xs-column(12);
+        height: 110px;
+        background-color: @Color2;
+        margin-top: 10px;
+        border-top: 2px solid @Color3;
+        @media screen and (max-width:320px){height:50px;}
+        @media screen and (max-width:425px){ height:95px;}
+
+        #footer_pl_icon {
+            height: 100px;
+            @media screen and (max-width:320px){
+                margin:0;
+                padding:0;
+                height: 50px;
+                width: 75px;
+                float:left;
+            }
+            @media screen and (max-width:425px){ height:75px; width:125px;}
+        }
+        #copyright_text {
+            color: #FFF;
+            margin: 0 auto;
+            text-align: center;
+            margin-top: 5%;
+            @media screen and (max-width:320px){ font-size:10px;}
+            @media screen and (max-width:425px){ font-size:12px;}
+            @media screen and (max-width:768px){ margin-top:10%;}
+        }
+        #b2t {
+            img {
+                height: 50px;
+                vertical-align: middle;
+                margin-top: 17px;
+                float: right;
+                @media screen and (max-width:320px){height: 25px;}
+                @media screen and (max-width:425px){height: 40px;}
+            }
+        }
+    }
+}

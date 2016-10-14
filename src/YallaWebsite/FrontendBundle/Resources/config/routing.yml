@@ -1,0 +1,77 @@
+yalla_website_frontend_homepage:
+    path:     /main
+    defaults: { _controller: YallaWebsiteFrontendBundle:Default:index }
+
+yalla_website_frontend_page_about:
+    path:     /about
+    defaults: { _controller: YallaWebsiteFrontendBundle:Default:about }
+
+yalla_website_frontend_page_contact:
+    path:     /contact
+    defaults: { _controller: YallaWebsiteFrontendBundle:Default:contact }
+
+yalla_website_frontened_venues:
+    path: /guides
+    defaults: { _controller: YallaWebsiteFrontendBundle:Default:venues }
+
+yalla_website_frontened_artists:
+    path: /artists
+    defaults: { _controller: YallaWebsiteFrontendBundle:Default:artists }
+
+yalla_website_frontened_articles:
+    path: /gossips
+    defaults: { _controller: YallaWebsiteFrontendBundle:Default:articles }
+
+yalla_website_frontened_article:
+    path: /gossip/{id}
+    defaults: { _controller: YallaWebsiteFrontendBundle:Default:getArticleBySlug }
+
+yalla_website_frontened_events:
+    path: /events
+    defaults: { _controller: YallaWebsiteFrontendBundle:Default:events }
+
+yalla_website_frontened_event:
+    path: /event/{id}
+    defaults: { _controller: YallaWebsiteFrontendBundle:Default:getEventBySlug }
+    
+frontend_ajax_get_event_by_date:
+    path: /allevents/{id}
+    defaults: { _controller: YallaWebsiteFrontendBundle:Ajax:getEventByDate }
+    options:
+        expose: true
+
+ads_manager:
+    resource: "@YallaWebsiteFrontendBundle/Resources/config/ads_manager_routing.yml"
+    prefix:   /ads_manager
+    
+social_media_follow_us:
+    path:     /template/social_media
+    defaults: { _controller: YallaWebsiteFrontendBundle:Template:social }
+    
+gogogo:
+    path:     /hp
+    defaults: { _controller: YallaWebsiteFrontendBundle:Template:homepage }
+
+yfe_cal_page:
+    path:   /calendar
+    defaults: { _controller: YallaWebsiteFrontendBundle:Calendar:load }
+    options:
+        expose: true
+        
+frontend_ajax_get_calendar:
+    path:   /calendar/get
+    defaults: { _controller: YallaWebsiteFrontendBundle:Calendar:index}
+    options:
+        expose: true
+        
+yfe_get_month:
+    path:   /calendar/get/{month}
+    defaults: { _controller: YallaWebsiteFrontendBundle:Calendar:index }
+    options:
+        expose: true   
+        
+frontend_ajax_gallery_loadmore:
+    path: /ajax/loadmore/{}
+    defaults: { _controller: ApplicationSonataMediaBundle:Gallery:loadMore }
+    options:
+        expose: true

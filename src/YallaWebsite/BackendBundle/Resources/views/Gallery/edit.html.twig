@@ -1,0 +1,42 @@
+{% extends "YallaWebsiteBackendBundle:Gallery:base_gallery.html.twig" %}
+
+{% block controlleraction  %}
+
+    <form enctype="multipart/form-data" action="{{ path ('backend_gallery_edit', {'id': entity.id})}}" class=" form-custom" method="POST">
+        <strong><span>Change Gallery Name</span></strong> 
+        {{ form_widget(form) }}
+        <br style="clear: both"/>
+{#
+        <div class='form-group'>
+            {{ form_row(editForm.tags) }}
+
+            {% for tag in entity.getTags %}
+                {% if tag %}
+
+                    <span class="label label-primary">
+                        {{ tag.name }}
+
+                        {% for tr in tag.getTagRelation %}
+
+                            <a href="{{ path('mykees_delete_relation',{'relation_id':tr.id}) }}" class="delTag">[x]
+                            </a>
+
+                        {% endfor %}
+
+                    </span>
+                {% endif %} 
+            {% endfor %}
+        </div>#}
+        <input type="submit" value="Save"/>
+
+    </form>
+
+
+
+{% endblock %}
+{#
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ mk_tag_javascript() }}
+{% endblock %}#}

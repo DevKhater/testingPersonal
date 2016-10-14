@@ -1,0 +1,18 @@
+{% extends "YallaWebsiteBackendBundle:Artist:base_artist.html.twig" %}
+{% block extraOptions %}
+    <a href="{{ path ('backend_artist_edit', {'id':entity.id})}}"><button class="btn btn-primary create_new"><i class="fa fa-edit "></i> Edit</button></a>
+    <a href="{{ path ('backend_artist_delete', {'id':entity.id})}}"><button class="btn btn-primary create_new"><i class="fa fa-edit "></i> Delete</button></a>
+{% endblock %}
+{% block controlleraction  %}
+    <div class='col-md-8'>
+        <strong>Name : {{entity.title}} <br/>
+            <strong>Biography: </strong>{{entity.biography}} <br/>
+            <strong>Social Media: </strong><br/>
+            <p>
+                {% include '@YallaWebsiteFrontendBundle/views/Template/artistSocialMedia.html.twig'%}
+            </p>
+    </div>
+    <div class="col-md-4">
+        {% thumbnail  entity.media, 'medium' %}
+    </div>
+{% endblock %}

@@ -1,0 +1,71 @@
+## YAML Template.
+---
+backend_homepage_index:
+    path: /
+    defaults: { _controller: YallaWebsiteBackendBundle:Homepage:homePage }
+
+backend_homepage_about:
+    path: /about
+    defaults: { _controller: YallaWebsiteBackendBundle:Homepage:homePageAbout }
+
+
+backend_ajax_set_slider:
+    path: ajax/slider/{id}/{pos}/{type}
+    defaults: { _controller: YallaWebsiteBackendBundle:Homepage:setSlider }
+    options:
+        expose: true
+
+backend_ajax_update_slider_view:
+    path: ajax/slider/get/view
+    defaults: { _controller: YallaWebsiteBackendBundle:Homepage:updateSliderView }
+    options:
+        expose: true
+
+backend_ajax_update_video_link:
+    path: ajax/video/{id}
+    defaults: { _controller: YallaWebsiteBackendBundle:Homepage:setVideoLink }
+    options:
+        expose: true
+
+backend_ajax_update_featured_gallery:
+    path: ajax/gallery/{id}
+    defaults: { _controller: YallaWebsiteBackendBundle:Homepage:setFeaturedGallery }
+    options:
+        expose: true
+
+backend_ajax_update_featured_article:
+    path: ajax/article/{id}
+    defaults: { _controller: YallaWebsiteBackendBundle:Homepage:setFeaturedArticle }
+    options:
+        expose: true
+        
+backend_ajax_update_four_articles:
+    path: ajax/articles/{id}
+    defaults: { _controller: YallaWebsiteBackendBundle:Homepage:setFourArticles }
+    options:
+        expose: true
+
+backend_ajax_get_events_for_day:
+    path: ajax/day/{id}
+    defaults: { _controller: YallaWebsiteBackendBundle:Homepage:getEventsInDay }
+    options:
+        expose: true
+
+backend_ajax_set_events_for_day:
+    path: ajax/event/{id}/{d}
+    defaults: { _controller: YallaWebsiteBackendBundle:Homepage:setEventsInDay }
+    options:
+        expose: true
+
+
+backend_ajax_set_about:
+    path: ajax/set/about/{data}
+    defaults: { _controller: YallaWebsiteBackendBundle:Homepage:setAbout }
+    options:
+        expose: true
+        
+backend_ajax_set_vision:
+    path: ajax/set/vision/{data}
+    defaults: { _controller: YallaWebsiteBackendBundle:Homepage:setVision }
+    options:
+        expose: true

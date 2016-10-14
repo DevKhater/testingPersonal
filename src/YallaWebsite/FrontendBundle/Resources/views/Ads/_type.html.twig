@@ -1,0 +1,7 @@
+{# If type is allowed, include the relevant partial #}
+{% if type|lower in allowed_type %}
+  {% include '@YallaWebsiteFrontendBundle/views/Ads/_' ~ type ~ '.html.twig' with { item: item } %}
+{# Else print an error #}
+{% else %}
+  <p>Unknown type <code>{{ type }}</code> for id <code>{{ id }}</code>.</p>
+{% endif %}

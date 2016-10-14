@@ -1,0 +1,39 @@
+
+<nav role="navigation">
+
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <!-- navbar-brand is hidden on larger screens, but visible when the menu is collapsed -->
+        <a class="navbar-brand" href="/">
+            {% image '@YallaWebsiteFrontendBundle/Resources/public/images/base/logo.png' %}
+            <img id='logo_icon' src="{{ asset_url }}" alt="YNL Logo" height='80'/>
+                {% endimage %}</a>
+    </div>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+            <li><a href="{{path('yalla_website_frontend_homepage')}}">Yalla</a></li>
+            <li><a href="{{path('yalla_website_frontend_page_about')}}">About</a></li>
+            <li><a href="{{path('sonata_media_gallery_index')}}">Snapshots</a></li>
+            <li><a href="{{path('yalla_website_frontened_events')}}">Events</a></li>
+            <li id='menuImageLogo'>{% image '@YallaWebsiteFrontendBundle/Resources/public/images/base/logo.png' %}
+                <img id='logo_icon' src="{{ asset_url }}" alt="YNL Logo" />
+                {% endimage %}
+            </li>
+            <li><a href="{{path('yalla_website_frontened_articles')}}">Gossip</a></li>
+            <li><a href="{{path('yalla_website_frontened_venues')}}">Guides</a></li>
+            <li><a href="{{path('yalla_website_frontened_artists')}}">Artists</a></li>
+            <li><a href="{{path('yalla_website_frontend_page_contact')}}">Contact</a></li>
+
+        </ul>
+    </div>
+    <!-- /.navbar-collapse -->
+
+    <!-- /.container -->
+</nav>

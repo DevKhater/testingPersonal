@@ -1,0 +1,14 @@
+# This file is auto-generated during the composer install
+parameters:
+    ads:
+        uri: "%kernel.root_dir%/../src/YallaWebsite/BackendBundle/Resources/config/ads_manager.yml"
+        allowed_types: ['image', 'video', 'html']
+    
+    socialmedia:
+        facebook: "http://www.facebook.com/"
+        twitter: "http://www.facebook.com/"
+        instagram: "http://www.facebook.com/"
+        soundcloud: "http://www.facebook.com/"
+        youtube: "http://www.facebook.com/"
+        googleplus: "http://www.facebook.com/"
+                

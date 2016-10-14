@@ -1,0 +1,36 @@
+services:
+    app.form.type.location:
+        class: YallaWebsite\BackendBundle\Form\Type\LocationType
+        tags:
+            - { name: form.type, alias: location_information }
+    app.form.type.socialmedia:
+        class: YallaWebsite\BackendBundle\Form\Type\SocialMediaType
+        tags:
+            - { name: form.type, alias: social_media_information }
+            
+    app.form.type.photographer:
+        class: YallaWebsite\BackendBundle\Form\Type\PhotographerType
+        tags:
+            - { name: form.type, alias: photographer_type }           
+    app.form.type.venue.location:
+        class: YallaWebsite\BackendBundle\Form\Type\VenueLocationType
+        arguments: ['@doctrine.orm.entity_manager']
+        tags:
+            - { name: form.type, alias: venue_location_information }
+    app.form.type.event:
+        class: YallaWebsite\BackendBundle\Form\Type\EventType
+        tags:
+            - { name: form.type, alias: event }
+    app.form.type.media:
+        class: YallaWebsite\BackendBundle\Form\Type\MediaType
+        tags:
+            - { name: form.type, alias: media_file }        
+    app.form.type.gallery_media:
+        class: YallaWebsite\BackendBundle\Form\Type\multiMediaType
+        tags:
+            - { name: form.type, alias: multi_media_files }
+    
+#    app.oauth.user_provider:
+#        class: YallaWebsite\BackendBundle\Model\UserProvider
+#        arguments: [ @fos_user.user_manager, [] ]
+

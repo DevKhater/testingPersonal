@@ -1,0 +1,21 @@
+<script>
+    $('#dd_days').change(function () {
+        var day = $('#dd_days').val();
+        if (day != null)
+        {
+            $.ajax({
+                type: "POST",
+                url: Routing.generate('backend_ajax_get_events_for_day', {id: day}),
+                success: function (data) {
+                    $('#eventsAjax').html(data);
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    console.log(xhr.responseText);
+                    console.log(textStatus);
+                    console.log(errorThrown);
+                    $('#eventsAjax').text('   No Events FOund In This Day');
+                }
+            });
+        }
+    });
+</script>

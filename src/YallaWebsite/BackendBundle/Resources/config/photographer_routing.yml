@@ -1,0 +1,15 @@
+backend_photographer_index:
+    path:   /
+    defaults:  { _controller: YallaWebsiteBackendBundle:Photographer:index }
+backend_photographer_show:
+    path:   /show/{id}
+    defaults:  { _controller: YallaWebsiteBackendBundle:Photographer:show }
+backend_photographer_edit:
+    path: /edit/{id}/
+    defaults:  { _controller: YallaWebsiteBackendBundle:Photographer:edit }
+backend_photographer_new:
+    path:   /new
+    defaults:  { _controller: YallaWebsiteBackendBundle:Photographer:new }
+backend_photographer_delete:
+    path: /delete/{id}
+    defaults:  { _controller: YallaWebsiteBackendBundle:Photographer:delete }

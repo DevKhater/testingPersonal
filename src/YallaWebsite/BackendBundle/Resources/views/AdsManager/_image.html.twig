@@ -1,0 +1,30 @@
+    {# _image.html.twig #}
+    <div class="tooltip_css">
+        {{item.target}}
+        <img class='tooltiptext' src="{{ item.link|default('http://cdn.domain.tld/path/to/default.png') }}" 
+             alt="{{ item.description|default('Default description') }}" />
+    </div>
+    <style>
+        .tooltip_css {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip_css .tooltiptext {
+            visibility: hidden;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 0;
+            bottom: 100%;
+            right: 0%;
+            /* Position the tooltip */
+            position: absolute;
+            z-index: 1;
+        }
+
+        .tooltip_css:hover .tooltiptext {
+            visibility: visible;
+        }
+
+
+    </style>

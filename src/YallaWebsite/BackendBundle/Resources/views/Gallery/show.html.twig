@@ -1,0 +1,105 @@
+{% extends "YallaWebsiteBackendBundle:Gallery:base_gallery.html.twig" %}
+{% block controlleraction  %}
+    <br style="clear: both">
+    <div class="row">
+        <div class="col-lg-12">
+            {% for flash_message in app.session.flashBag.get('error') %}
+                <div class="alert alert-danger">
+                    <strong>Error!</strong> {{ flash_message }}
+
+                </div>
+            {% endfor %}
+        </div>
+    <div class='col-md-6 center clear-fix' style="margin-bottom: 1em">
+        {% if entity.description != null %} 
+            {{ entity.description }}
+        {% endif %}
+    </div>
+    <div class='col-md-6 center clear-fix' style="border-left:1px solid black;margin-bottom: 1em;">
+        {% if entity.photographers is not empty  %}
+            Photo Credit : 
+            {% for ph in entity.photographers %}
+                <a href='ph.website'>{{ph.name}}</a> - 
+            {% endfor %}
+            {% else %}
+                No Photographers Assigned to This Gallery
+        {% endif %}
+    </div>
+    </div>
+    <div class="row" style="border-top:1px solid black; padding:20px;">
+    <div class="col-md-3" style="text-align: center; border-right: #001f3f;border-right-width: 4px;border-right-style: double">
+        <div style="min-height: 400px;">
+            {% if entity.media is not empty %}
+                {%  thumbnail entity.media, 'preview' %}
+                <p>Image Cover Preview</p>
+            {% else %} <p>No Cover Image Found 
+                    {% if pagination is not empty %}<br/><strong><a href="{{ path ('backend_gallery_set_preview',  {'id': entity.id})}}">Set Preview Image Now</a></strong> </p> {% endif %}
+            {% endif %}
+                {% if entity.tags is not empty %}
+                <h4>Tags</h4>
+                {% for tag in entity.tags %}
+                    <span class="label label-primary"> {{ tag.name }}<a href="{{path('backend_ajax_delete_tag', {'id':tag.id, 'g':entity.id})}}" class="delTag">[x]</a></span>
+                {% endfor %} 
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-9">
+        {% if pagination is empty %}
+            <div class="col-md-12">
+                <div class="col-md-3"></div>
+                <a href="{{ path ('backend_gallery_add_images_gallery',  {'id': entity.id})}}">
+                    <div class="col-md-6 col-sm-12 col-xs-12">
+                        <div class="dashboard-div-wrapper bk-clr-two">
+                            <i class="fa fa-file-image-o"></i>
+                            <h5>ADD IMAGES</h5>
+                        </div>
+                    </div></a>
+                <div class="col-md-3"></div>
+            </div>
+        {% else %}
+
+            {% for media in pagination  %}
+                <div class="col-md-2" style="text-align: center;">
+                    <div class="thumbnail" style="height: 150px;margin-bottom: 0px;">
+                        {% thumbnail  media.media, 'preview' %}<br/>
+                    </div>
+                    <div style="padding-bottom: 10px;"><a href='{{ path ('backend_gallery_delete_image', {'id': media.id, 'galleryid': entity.id})}}'><span class="label label-primary">Delete</span></a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        </div>
+        <div class="col-md-12 navigation">
+            Pagination {{ knp_pagination_render(pagination) }}
+        </div>
+        {#</div>#}
+    {% endif %}
+{% endblock %}
+
+
+{% block javascripts %} 
+    {{ parent() }}
+    <script>
+        $(document).ready(function () {
+            $('.delTag').on('click', function (e) {
+                //var pid = $(this).attr("data-playgroup-id");
+                //aButtonPressed(pid); DELTE AJAXC FUNCTION
+                e.preventDefault();
+                var a = $(this);
+                $.post(a.attr('href'), function (response) {
+                    if (response.code == 100) {//dummy check
+                        a.parent().fadeOut();
+                    }
+
+                }, "json");
+
+            });
+
+            $('.savepreview').on('click', function () {
+                var pid = $("select").val();
+                aButtonPressed(pid);
+            });
+        });
+    </script>
+
+{% endblock %}

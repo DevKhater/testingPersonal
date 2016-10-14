@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {{ sonata_seo_title() }}
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="developer" content="Michel Khater, m.f.khater@gmail.com"/>
+
+        <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap/dist/css/bootstrap.min.css') }}">
+         <link rel="stylesheet" href="{{ asset('assets/vendor/font-awesome/css/font-awesome.min.css') }}">
+         <link rel="stylesheet" href="{{ asset('assets/vendor/jquery-ui/themes/flick/jquery-ui.min.css') }}">
+         <link rel="stylesheet" href="{{ asset('assets/vendor/select2/dist/css/select2.min.css') }}">
+         <link rel="stylesheet" href="{{ asset('assets/vendor/jquery.tagsinput/dist/jquery.tagsinput.min.css') }}">
+         <link rel="stylesheet" href="{{ asset('assets/vendor/image-picker/image-picker/image-picker.css') }}">
+        {% stylesheets
+                '@YallaWebsiteBackendBundle/Resources/public/css/style.css'
+        %}
+        <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}"/>
+        {% endstylesheets %}
+	    {% block stylesheets %}{% endblock %}
+    <!-- HTML5 Shiv and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        .create_new{
+            margin-top: -50px;
+        }
+        table.zebra tr:nth-child(odd) {
+            background-color: #EFF4FA;
+        }
+
+        table.zebra tr:nth-child(even) {
+            background-color: #F7FAFD;
+        }
+        table.zebra th {
+            background-color: #FFF;
+        }
+    </style>
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6" style="float: left"><a href="{{path('yalla_website_frontend_homepage')}}">YallaNightlife.com</a></div>
+                <div class="col-md-6" style="float: right">
+                    <a href="{{ path ('backend_profile_index') }}" style="color: black"><strong>Profile: </strong>{{ app.user.email }}</a>
+                    &nbsp;&nbsp;
+                    <strong><a href="{{ path ('fos_user_security_logout') }}">Logout</a></strong>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- HEADER END-->
+    <div class="navbar set-radius-zero" style="background-color: #DD1144">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="{{path ('yalla_website_backend_homepage') }}"><h4 style="color: black;">Yalla Nightlife</h4></a>
+            </div>
+
+            <div class="left-div">
+                <div class="user-settings-wrapper">
+                    <ul class="nav">
+                        <li class="dropdown">
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- LOGO HEADER END-->
+    <section class="menu-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="navbar-collapse collapse ">
+                        <ul id="menu-top" class="nav navbar-nav navbar-right">
+                            <li><a class="menu-top-active" href="{{path ('yalla_website_backend_homepage') }}">Dashboard</a>
+                            <li>{% if is_granted('ROLE_ADMIN_E') %}<a href="{{path('backend_event_index')}}">Events</a>{% endif %}</li>
+                            <li>{% if is_granted('ROLE_ADMIN_V') %}<a href="{{path('backend_venue_index')}}">Venues</a>{% endif %}</li>
+                            <li>{% if is_granted('ROLE_ADMIN_G') %}<a href="{{path('backend_gallery_index')}}">Galleries</a>{% endif %}</li>
+                            <li>{% if is_granted('ROLE_ADMIN_A') %}<a href="{{path('backend_article_index')}}">Articles</a>{% endif %}</li>
+                            {% if is_granted('ROLE_SUPER_ADMIN') %}
+                            <li><a href="{{path('backend_ads_manager_index')}}">Advertisement</a></li>
+                            <li><a href="{{path('backend_member_index')}}">Members</a></li>
+                            <li><a href="{{path('backend_user_index')}}">Users</a></li>
+                            <li><a href="{{path('backend_homepage_index')}}">Homepage</a></li>
+                            {% endif %}
+
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- MENU SECTION END-->
+    <div class="content-wrapper">
+        <div class="container">
+        {% block body %}{% endblock %}
+    </div>
+</div>
+{% block extrabody %}{% endblock %}
+<script src="{{ asset('assets/vendor/jquery/dist/jquery.min.js') }}"></script>
+<script src="{{ asset('assets/vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('assets/vendor/jquery-ui/jquery-ui.min.js') }}"></script>
+<script src="{{ asset('assets/vendor/select2/dist/js/select2.min.js') }}"></script>
+{% block tinymce %} {% endblock %}
+{% block datepicker %}{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('assets/vendor/jquery.tagsinput/src/jquery.tagsinput.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("input[name$='[tags]']").tagsInput();
+        });
+    </script>
+{% endblock %}
+</body>
+</html>

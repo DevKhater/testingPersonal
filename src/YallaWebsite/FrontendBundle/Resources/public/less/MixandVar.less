@@ -1,0 +1,265 @@
+/* 
+    Created on : Jun 3, 2016, 10:21:21 AM
+    Author     : Michel Khater
+*/
+@font-face {
+    font-family: 'CenturyGothicBold';
+    src: url('../fonts/CenturyGothic-Bold.eot');
+    src: url('../fonts/CenturyGothic-Bold.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Ebrima';
+    src: url('../fonts/Ebrima.eot');
+    src: url('../fonts/Ebrima.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/Ebrima.woff') format('woff'),
+        url('../fonts/Ebrima.woff2') format('woff2'),
+        url('../fonts/Ebrima.ttf') format('truetype'),
+        url('../fonts/Ebrima.svg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'FontAwesome';
+    src: url('../fonts/FontAwesome.eot');
+    src: url('../fonts/FontAwesome.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/FontAwesome.woff') format('woff'),
+        url('../fonts/FontAwesome.woff') format('woff2'),
+        url('../fonts/FontAwesome.ttf') format('truetype'),
+        url('../fonts/FontAwesome.svg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+@Color1: #eaeaea;   //BG COLOR LIGHT GRAY
+@Color2: #4d4d4d;   //BG COLOR DARK GRAY
+@Color3: #ffde16;   //BG COLOR YELLOW
+@Color4: #CBCBCB;   // Inactive Calednar extra days
+@Color5: #1f1f1f;   //darker gray for modal
+@Pagination-Gray: #565656;
+@tempColor: #ff00ff;
+.col-xs-15,
+.col-sm-15,
+.col-md-15,
+.col-lg-15 {
+    position: relative;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-bottom: 15px;
+}
+.col-xs-15 {
+    width: 50%;
+    float: left;
+}
+.col-xs-153 {
+    width: 33.333%;
+    float: left;
+}
+@media (max-width: 480px) {
+    .col-xs-153 {
+        padding: 0;
+        margin-bottom: 0;
+    }
+
+}
+@media (min-width: 768px) {
+    .col-sm-15 {
+        width: 33.333%;
+        float: left;
+    }
+}
+@media (min-width: 992px) {
+    .col-md-15 {
+        width: 20%;
+        float: left;
+    }
+}
+@media (min-width: 1200px){
+    .col-lg-15 {
+        width: 20%;
+        float: left;
+    }
+}
+
+.fontResizer() {
+    @media screen and (min-width:320px){ font-size: 20px; }
+    @media screen and (min-width:425px){ font-size: 25px; }
+    @media screen and (min-width:768px){ font-size: 30px; }
+    @media screen and (min-width:1024px){ font-size: 40px; }
+    @media screen and (min-width:1440px){ font-size: 50px; }
+    @media screen and (min-width:2560px){ font-size: 60px; }
+}
+
+.longFontResizer(){
+    @media screen and (min-width:320px){ font-size: 14px; }
+    @media screen and (min-width:375px){ font-size: 16px; }
+    @media screen and (min-width:425px){ font-size: 18px; }
+    @media screen and (min-width:768px){ font-size: 30px; }
+    @media screen and (min-width:1024px){ font-size: 40px; }
+    @media screen and (min-width:1440px){ font-size: 50px; }
+    @media screen and (min-width:2560px){ font-size: 60px; }
+}
+
+.bodyFontResizer(){
+    @media screen and (max-width:320px){ font-size: 13px; }
+    @media screen and (min-width:320px){ font-size: 13px; }
+    @media screen and (min-width:375px){ font-size: 15px; }
+    @media screen and (min-width:425px){ font-size: 15px; }
+    @media screen and (min-width:768px){ font-size: 20px; }
+    @media screen and (min-width:1024px){ font-size: 20px; }
+    @media screen and (min-width:2560px){ font-size: 30px; }
+}
+
+.mediaScreenForFontSize() {
+        @media only screen and (min-width : 1020px) {
+            font-size: 20px;
+        }
+        @media only screen and (min-width : 930px) and (max-width : 1020px) {
+            font-size: 18.5px;
+        }
+        @media only screen and (min-width : 840px)  and (max-width : 930px) {
+            font-size: 17px;
+        }
+        @media only screen and (min-width : 660px)  and (max-width : 840px) {
+            font-size: 15px;
+        }
+        @media only screen and (min-width : 570px)  and (max-width : 660px) {
+            font-size: 11.5px;
+        }
+        @media only screen and (min-width : 480px) and (max-width : 570px) {
+            font-size: 10px;
+        }
+        @media only screen and (max-width : 480px) {
+            font-size: 8px;
+        }
+    }
+
+
+.modalImageResponsive(){
+    @media screen and (max-width: 210px){
+        height: 125px;
+        width: 125px;
+    }
+    @media screen and (max-width: 425px){
+        height: 150px;
+        width: 150px;
+    }
+    @media screen and (max-width: 768px){
+        height: 200px;
+        width: 300px;
+    }
+    @media screen and (max-width: 1024px){
+        height: 400px;
+    }
+}
+
+.hyperlink() {
+    a {
+        font-weight: bold;
+        &:link
+            {
+            color: @Color3;
+        }
+        &:hover
+            {
+            color: @Color3 + 100;
+        }
+        &:visited,&:active {
+            color: @Color3 - 100 ;
+        }
+    } 
+}
+
+#yellow_color {
+    font-weight: bold;
+    color: @Color3;
+}
+
+.mediaIntoBG {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+.socialMediaIcons { 
+    height: 30px;
+    width: 30px;
+    border-radius: 3px;
+
+}
+.RowIn4Col {
+    .make-lg-column(4);
+    .make-md-column(4);
+    .make-sm-column(4);
+    .make-xs-column(4);
+    margin-bottom: 2%;
+    text-align: center;
+}
+
+.modal_wrapper {
+    min-width: 90%;
+    max-width: 90%;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.subtitle {
+    margin: 0 0 2em 0;
+}
+
+.fancy {
+    line-height: 0.5;
+    text-align: center;
+    span {  
+        display: inline-block;
+        position: relative;  
+        font-size: 36px;
+        font-weight: bold;
+        .fontResizer;
+        &:before,
+            &:after{
+            content: "";
+            position: absolute;
+            height: 10px  ;
+            border-bottom: 3px solid #ffde16;
+            top: 0;
+            width: 60%;
+
+            @media screen and (max-width: 480px){
+                height: 6px; 
+                width: 45px ;
+            }
+            @media screen and (max-width: 768px){ 
+                height: 10px;
+                width: 50%;
+            }
+            @media screen and (max-width: 480px){width: 0;}
+            @media screen and (min-width: 480px){width: 20%;}
+            @media screen and (min-width: 600px){ width: 40%;}
+            @media screen and (min-width: 1200px){ width: 50%;}
+            @media screen and (min-width: 1440px){ height: 20px; width: 48%;}}
+            @media screen and (min-width: 2560px){ height: 20px;}
+
+            &:before {
+                right: 100%;
+                margin-right: 15px;
+            }
+            &:after {
+                left: 100%;
+                margin-left: 15px;
+            }
+        }
+        #longer {
+            &:before,
+                &:after{
+                @media screen and (min-width: 320px){ height: 8px;width: 70px;}
+                @media screen and (min-width: 375px){ height: 8px;width: 93px;}
+                @media screen and (min-width: 425px){ height: 8px;width: 100px;}
+                @media screen and (min-width: 768px){ height: 13px;width: 140%;}
+                @media screen and (min-width: 1024px){ height: 13px;width: 141%;}
+                @media screen and (min-width: 1440px){ height: 15px;width: 166%;}
+                @media screen and (min-width: 2560px){ height: 18px;width: 200%;}
+            }
+        }
+    }

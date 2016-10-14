@@ -1,0 +1,132 @@
+{% extends "@YallaWebsiteFrontendBundle/views/front_base.html.twig" %}
+{% set tempArray = {} %}
+{% block stylesheets %}
+    {{parent()}}
+    <link rel="stylesheet" href="{{ asset('bundles/yallawebsitefrontend/css/chocolat.css') }}" />
+    <link rel="stylesheet" href="{{ asset('bundles/yallawebsitefrontend/css/sweetalert.css') }}" />
+{% endblock %}    
+
+{% block body %}
+    <div class="wrapper">
+        <div class="theEntityDiv">
+            <div class="innerTitle">
+                <h1>{{gallery.name}} {{gallery.date|date("d/m/Y")}}</h1>
+            </div>
+            <div id="innerEntityContent">
+                {{ gallery.description }}
+            </div>
+            <div id="galleryViewPhotogtapher">
+                {% if gallery.photographers is not empty %}
+                    <p><span>Photo Credit</span>: 
+                        {% for ph in gallery.photographers %}
+                            <a href='ph.website'>{{ph.name}}</a> {% if not loop.last %} - {% endif %} 
+                        {% endfor %}
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="im">
+                <div class="grid-sizer"></div>
+                <div id='links' data-chocolat-title="{{gallery.name}}">
+                    {% for galleryHasMedia in gallery.GalleryHasMedias %}
+                        {% set id = random() %}
+                        {% set tempArray = tempArray|merge({('_'~id):(voteValue(galleryHasMedia.id))}) %}            
+                        <div class="im-item">
+                            <a class="chocolat-image" title="GallerySomething" href="{% path galleryHasMedia.media, 'large' %}"><img class="thumbnail img-responsive" src="{% path galleryHasMedia.media, 'small' %}">
+                            </a>
+                            <div class="chocolat-image-data">
+                                <div class="fb_vote" id="vote{{ galleryHasMedia.id }}" style="color:#000;font-weight: bold;">
+                                    <span id='{{galleryHasMedia.id}}'onclick="fb_login();">Vote</span>
+                                </div>
+                                <div class="Gallery_SM_Share">{% include '@YallaWebsiteFrontendBundle/views/Template/socialMediaShare.html.twig' %}</div>
+                                {#{{ voteValue(galleryHasMedia.id)|rating(5) }}#}
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <div id='chocolat-image-data-adv' class="Adv_Display">{{ render_esi(url('ads_manager_show', { 'id': 'snapshot_popup' })) }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block massonary %}
+    {% javascripts '@massonary' '@imagesloaded'%}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    <script type="text/javascript" src="{{ asset('bundles/yallawebsitefrontend/js/socialite.min.js') }}"></script>
+    <script src="{{ asset('bundles/yallawebsitefrontend/js/jquery.chocolat.js') }}"></script>
+    <script src="{{ asset('bundles/yallawebsitefrontend/js/sweetalert.min.js') }}"></script>
+    <script type="text/javascript">
+                                        function fb_login() {
+                                            var gID = {{gallery.id}};
+                                                    FB.getLoginStatus(function (response) {
+                                                        if (response.status === 'connected') {
+                                                            var uid = response.authResponse.userID;
+                                                            var img = $('.fb_vote span').attr('id');
+                                                            var token = uid + '-' + gID + '-' + img;
+                                                            voteAjax(img, token);
+                                                        } else {
+                                                            // not_authorized
+                                                            FB.login(function (response) {
+                                                                if (response.authResponse) {
+                                                                    FB.api('/me', function (response) {
+                                                                        //alert('Thank You '+ response.name +  ' You Can Vote Now');
+                                                                        swal(response.name, "Thank You You Can Vote Now", "success");
+                                                                    });
+
+                                                                } else {
+                                                                    sweetAlert("You Must Be Logged In To Vote", "You Can't Vote Now", "error");
+                                                                }
+                                                            }, {scope: 'email'});
+                                                        }
+                                                    });
+                                        }
+                                        function voteAjax(img, token) {
+                                            $.ajax({
+                                                type: "POST",
+                                                url: '{{ url('voting_upvote') }}?reference=' + img + '&value=1&token=' + token,
+                                                success: function (data) {
+                                                    $('#vote' + img).html(data);
+                                                    $('#vote' + img).css('color', '#000');
+                                                    $('#vote' + img).css('font-weight', 'bold');
+                                                },
+                                                error: function (xhr, textStatus, errorThrown) {
+                                                    console.log(xhr.responseText);
+                                                    console.log(textStatus);
+                                                    console.log(errorThrown);
+
+                                                }
+                                            });
+                                        }
+                                        $(document).ready(function () {
+                                            var $grid = $('.im').masonry({
+                                                itemSelector: '.im-item',
+                                                percentPosition: true,
+                                                columnWidth: '.grid-sizer'
+                                            });
+                                            console.log('masonary initialized');
+// layout Isotope after each image loads
+                                            $grid.imagesLoaded().progress(function () {
+                                                $grid.masonry();
+                                            });
+                                            console.log('masonary progress');
+                                            $('.Kunstmaan').css('display', 'none');
+                                            $('#links').Chocolat({
+                                                imageSize: 'contain',
+                                            });
+                                            console.log('chocolat initialized');
+
+                                            $('.epub a').click(function (e) {
+                                                e.preventDefault();
+                                            });
+                                            $('.epub img').click(function (e) {
+                                                var href = $('.epub a').attr('href');
+                                                window.open(href, '_blank');
+                                            });
+                                        });
+    </script>
+
+{% endblock %}

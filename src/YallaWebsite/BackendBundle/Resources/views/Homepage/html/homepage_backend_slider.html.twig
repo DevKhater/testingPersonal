@@ -1,0 +1,9 @@
+<h5><strong>Slider Options</strong></h5>
+<div id='ajaxDiv' class="col-md-12 clearfix"></div>
+<p id="get_slider_view" style="font-weight: normal; font-size: 12px;"><span style="background-color: #000; color: #fff; cursor: pointer"><i><u>get Slider View</u></i></span></p>
+<div class='col-md-12'>
+    {% for ENT in  arr %}
+        {% include '@YallaWebsiteBackendBundle/views/Homepage/html/homepage_slider_selector.html.twig'  with {arr: ENT} %}
+    {% endfor %}
+</div>
+<br/><br/><br/>

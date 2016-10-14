@@ -1,0 +1,14 @@
+
+{% block javascripts %}{% endblock %}
+
+    {% block tinymce %}  
+        {{ tinymce_init({
+            'use_callback_tinymce_init': true, 
+              selector: "textarea",  
+  'plugins': "image",
+  'menubar': "insert",
+  'toolbar': "image",
+  'image_caption': true
+            }) 
+        }}
+    {% endblock %}

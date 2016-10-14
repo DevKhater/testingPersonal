@@ -1,0 +1,31 @@
+{% extends "@YallaWebsiteFrontendBundle/views/front_base.html.twig" %}
+{% block stylesheets %}
+    {{parent()}}
+    <style>
+    .centered {
+        margin: 0 auto;
+    }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="wrapper">
+        <div class="theEntityDiv">
+            <div class="innerTitle">
+                <h1>{{gallery.name}} {{gallery.date|date("d/m/Y")}}</h1>
+            </div>
+            <div><<a href="{{ url('sonata_media_gallery_view', {'id' : gallery.slug }) }}"> Back To Gallery</a></div>
+        </div>
+            <div>
+                {% media media, 'xlarge' with {'class': 'img-responsive centered'} %}
+                <br/>
+            </div>
+
+                {% set galleryHasMedia = media %}
+
+                    {% include "@YallaWebsiteFrontendBundle/views/Template/socialMediaShare.html.twig" with {'galleryID': gallery.slug, 'imageID':galleryHasMedia.id } %}
+
+            <div><<a href="{{ url('sonata_media_gallery_view', {'id' : gallery.slug }) }}"> Back To Gallery</a></div>
+
+
+    {% endblock %}

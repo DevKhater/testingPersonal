@@ -1,0 +1,23 @@
+<script>
+    $('#featured_gallery').click(function (e) {
+        e.preventDefault();
+        var Gallery = $('#dd_feature_gallery').val();
+        $.ajax({
+            type: "POST",
+            url: Routing.generate('backend_ajax_update_featured_gallery', {id: Gallery}),
+            success: function (data) {
+                $('h4#ajaxTitle').text('Success');
+                $('#ajaxMessage p').text('Article Updated');
+                $('#ajaxResultMessages').modal('show');
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                console.log(xhr.responseText);
+                console.log(textStatus);
+                console.log(errorThrown);
+                   $('h4#ajaxTitle').text('Error');
+                   $('#ajaxMessage p').text(errorThrown);
+                   $('#ajaxResultMessages').modal('show');
+            }
+        });
+    });
+</script>

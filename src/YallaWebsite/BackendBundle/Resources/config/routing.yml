@@ -1,0 +1,42 @@
+yalla_website_backend_homepage:
+    path:     /
+    defaults: { _controller: YallaWebsiteBackendBundle:Default:index }
+
+Homepage:
+    resource: "@YallaWebsiteBackendBundle/Resources/config/homepage_routing.yml"
+    prefix:   /homepage
+
+
+Artists:
+    resource: "@YallaWebsiteBackendBundle/Resources/config/artists_routing.yml"
+    prefix:   /artist
+Venues:
+    resource: "@YallaWebsiteBackendBundle/Resources/config/venues_routing.yml"
+    prefix:   /venue
+Events:
+    resource: "@YallaWebsiteBackendBundle/Resources/config/events_routing.yml"
+    prefix:   /event
+Gallery:
+    resource: "@YallaWebsiteBackendBundle/Resources/config/gallery_routing.yml"
+    prefix:   /gallery
+Photographer:
+    resource: "@YallaWebsiteBackendBundle/Resources/config/photographer_routing.yml"
+    prefix:   /photographer
+Article:
+    resource: "@YallaWebsiteBackendBundle/Resources/config/article_routing.yml"
+    prefix:   /article
+User:
+    resource: "@YallaWebsiteBackendBundle/Resources/config/user_routing.yml"
+    prefix:   /user
+    
+Profile:
+    resource: "@YallaWebsiteBackendBundle/Resources/config/profile_routing.yml"
+    prefix:   /profile
+
+Advertisment:
+    resource: "@YallaWebsiteBackendBundle/Resources/config/ad_manager_routing.yml"
+    prefix:   /adv
+
+Members:
+    resource: "@YallaWebsiteBackendBundle/Resources/config/members_routing.yml"
+    prefix:   /member

@@ -1,0 +1,29 @@
+{% if (entities) %}
+    {% if (entities|length) == 1 %}
+        {% set class = 'center col-xs-4 col-xs-offset-4' %}
+        {% set style = '' %}
+    {% elseif  (entities|length) == 2 %}
+        {% set class = 'col-xs-4' %}
+        {% set style = 'margin-right:8%; margin-left:8%;' %}
+
+    {% else %}
+        {% set class = 'col-xs-4' %}
+        {% set style = '' %}
+    {%endif %}
+
+    <div id='DisplayedAjaxRow'>
+        {%for event in entities%}
+            <div class='{{class}}'>
+            <div class='eventAjaxDiv'>
+                <a href="{{path('yalla_website_frontened_event',  {'id': event.slug}) }}" >
+                    <div class='ajaxEventImageDiv center' style="background-image: url('{% path  event.media, 'displayIndex' %}')">
+                        <div class='eventTitleHoverDisplay'>{{ event.title }}</div>
+                    </div>
+                </a>
+            </div>
+            </div>
+    {% endfor %}
+{% else %}
+    NO EVENTS
+{% endif %}
+</div>

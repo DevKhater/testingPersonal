@@ -1,0 +1,51 @@
+{# empty Twig template #}
+{% extends "@YallaWebsiteFrontendBundle/views/front_base.html.twig" %}
+{% block body %}
+    <div class="wrapper">
+        <div class="IndexTitle">
+            <h1>Places To Go</h1>
+        </div>
+        {% for venue in pagination  %}
+            <div class="venueDiv">
+                <div class="venueContent" data-toggle="modal" data-target="#{{venue.slug}}" style="background-image: url('{% path  venue.media, 'displayIndex' %}')">
+                    <div class="venueDivTitle">
+                        {{ venue.title }}
+                    </div>
+                </div>
+                <div id="{{venue.slug}}" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button class="close" data-dismiss="modal" data-target="#{{venue.slug}}" style="color: white">×</button>
+                        </div>
+                            
+                            <div class="modal_image">
+                                {% thumbnail venue.media, 'large' with {'class': 'img-responsive'} %}
+                            </div>
+                            <div class="modal_title">
+                                <h2>{{venue.title}}</h2>
+                            </div>
+                            <div class="modal_description">
+                                <p>{{venue.content}}</p>
+                            </div>
+                            <div class="modal_footer">
+                                <p>Address: {{venue.location.address}}<br/>
+                                    Telephone: {{venue.location.telephone}}<br/>
+                                    Working Hours: From <span id='yellow_color'>{{venue.workingFrom.date|date("g:iA")}}</span> to <span id='yellow_color'>{{venue.workingTo.date|date("g:iA")}}</span><br/>
+                                    Website: <a href="{{venue.website}}">{{venue.title}}</a></p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+        <div class="page_pagination">
+            {% if (pagination) %}
+                {{ knp_pagination_render(pagination, 'YallaWebsiteFrontendBundle:Template:pagination.html.twig') }}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

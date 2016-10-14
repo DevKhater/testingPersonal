@@ -1,0 +1,16 @@
+{% extends "YallaWebsiteBackendBundle:Member:base_member.html.twig" %}
+{% block extraOptions %}
+    <a href="{{ path ('backend_member_edit', {'id':entity.id})}}"><button class="btn btn-primary create_new"><i class="fa fa-edit "></i> Edit</button></a>
+    <a href="{{ path ('backend_member_delete', {'id':entity.id})}}"><button class="btn btn-primary create_new"><i class="fa fa-edit "></i> Delete</button></a>
+{% endblock %}
+{% block controlleraction  %}
+    <div class="row">
+        <div class='col-md-8'>
+            <strong>Name : </strong>{{entity.name}} <br/>
+            <strong>Website : </strong>{{entity.website}} <br/>
+        </div>
+        <div class="col-md-4">
+            {% thumbnail  entity.media, 'displayIndex' %}
+        </div>
+    </div>
+{% endblock %}

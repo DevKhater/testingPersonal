@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% block title %}Yalla Nightlife Backend{% endblock %}</title>
+        {% stylesheets 
+                '@bootstrap_css' 
+                '@YallaWebsiteBackendBundle/Resources/public/css/font-awesome.css'
+                '@YallaWebsiteBackendBundle/Resources/public/css/jquery-ui.css'
+                '@YallaWebsiteBackendBundle/Resources/public/css/style.css'
+        %}
+        <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}"/>
+        {% endstylesheets %}
+    </head>
+    <body>
+        <div class="navbar navbar-inverse set-radius-zero">
+        <div class="container">
+            
+            <div class="left-div">
+                <i class="fa fa-user-plus login-icon" ></i>
+        </div>
+            </div>
+        </div>
+        <div>
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+                <a href="{{ path('fos_user_security_logout') }}">
+                    {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                </a>
+            {% else %}
+                {#<a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>#}
+            {% endif %}
+        </div>
+
+        {% for type, messages in app.session.flashBag.all %}
+            {% for message in messages %}
+                <div class="{{ type }}">
+                    {{ message|trans({}, 'FOSUserBundle') }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+
+        <div>
+            {% block fos_user_content %}
+            {% endblock fos_user_content %}
+        </div>
+    </body>
+</html>

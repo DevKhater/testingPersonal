@@ -1,0 +1,29 @@
+{% extends "YallaWebsiteBackendBundle:Venue:base_venue.html.twig" %}
+{% block extraOptions %}
+        <a href="{{ path ('backend_venue_edit', {'id':entity.id})}}"><button class="btn btn-primary create_new"><i class="fa fa-edit "></i> Edit</button></a>
+        <a href="{{ path ('backend_venue_delete', {'id':entity.id})}}"><button class="btn btn-primary create_new"><i class="fa fa-edit "></i> Delete</button></a>
+        {% endblock %}
+{% block controlleraction  %}
+    <div class='col-md-8'>
+        <strong>Name : {{entity.title}} </br>
+
+            <strong>Address : </strong>{{entity.location.address }} </br>
+            
+
+                <strong>Website : </strong>{{entity.website}} </br>
+
+                <strong>    Telephone : </strong>{{entity.location.telephone}} </br>
+
+            <strong>    Description : </strong>{{entity.content|raw}} </br>
+            <strong>Tags</strong>
+            {% if entity.getTags() %}
+                {% for tag in entity.getTags %}
+                    <span class="label label-primary"> {{ tag.name }} </span>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div class="col-md-4">
+            {% thumbnail  entity.media, 'medium' %}
+        </div>
+    </div>
+{% endblock %}

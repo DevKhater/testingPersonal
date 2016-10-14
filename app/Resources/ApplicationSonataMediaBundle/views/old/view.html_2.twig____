@@ -1,0 +1,236 @@
+{% extends "@YallaWebsiteFrontendBundle/views/front_base.html.twig" %}
+{% set tempArray = {} %}
+{% block stylesheets %}
+    {{parent()}}
+    <link rel="stylesheet" href="{{ asset('bundles/yallawebsitefrontend/css/sweetalert.css') }}" />
+    <link rel="stylesheet" href="{{ asset('bundles/starrating/css/rating.css') }}" />
+
+    <link rel="stylesheet" href="https://cdn.rawgit.com/codrops/GammaGallery/master/css/demo.css"/>
+    <link rel="stylesheet" href="https://cdn.rawgit.com/codrops/GammaGallery/master/css/style.css"/>
+    <script src="https://cdn.rawgit.com/codrops/GammaGallery/master/js/modernizr.custom.70736.js"></script>
+    <noscript><link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/codrops/GammaGallery/master/css/noJS.css"/></noscript>
+    <style>
+        .gamma-description { text-align: left; display: none }
+        .gamma-single-view .gamma-description {text-align: left; display: block;}
+        .gamma-single-view .gamma-description-wrapper .gamma-description .sm_share,
+        .gamma-single-view .gamma-description-wrapper .gamma-description .star_vote,
+        .gamma-single-view .gamma-description-wrapper .gamma-description .fb_vote {
+            display: inline-block;
+            text-align: left;
+            float: left;
+            margin-top: -47px;
+        }
+        .gamma-single-view .gamma-description-wrapper .gamma-description .gallery_adv {
+            float:right;
+            display: inline-block;
+            text-align: right;
+        }
+        .gamma-single-view .gamma-description-wrapper .gamma-description .sm_share .Gallery_SM_Share a {
+            display: inline-block;
+            width:40px;
+        }
+        .gamma-single-view .gamma-description-wrapper .gamma-description .fb_vote {
+            color:white;
+            font-weight: bold;
+            padding: 10px;
+        }
+        .epub {margin-top: -30px}
+    </style>
+{% endblock %}    
+
+{% block body %}
+    <div class="wrapper">
+        <div class="theEntityDiv">
+            <div class="innerTitle">
+                <h1>{{gallery.name}} {{gallery.date|date("d/m/Y")}}</h1>
+            </div>
+            <div id="innerEntityContent">
+                {{ gallery.description }}
+            </div>
+            <div id="galleryViewPhotogtapher">
+                {% if gallery.photographers is not empty %}
+                    <p><span>Photo Credit</span>: 
+                        {% for ph in gallery.photographers %}
+                            <a href='ph.website'>{{ph.name}}</a> {% if not loop.last %} - {% endif %} 
+                        {% endfor %}
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="gamma-container gamma-loading" id="gamma-container">
+                <ul class="gamma-gallery">
+                    {% for galleryHasMedia in pagination %}
+                        <li>
+                            <div data-alt="img01" data-description='<div class="col-md-4"><p class="fb_vote" id="vote{{ galleryHasMedia.id }}"><span id="{{galleryHasMedia.id}}"onclick="fb_login({{galleryHasMedia.id}});" style="line-height:40px">Vote</span></p><p class="sm_share"><span class="Gallery_SM_Share">{% include "@YallaWebsiteFrontendBundle/views/Template/socialMediaShare.html.twig" %}</span></p>{{ voteValue(galleryHasMedia.id)|rating(5) }}</div><div class="col-md-6">{#{{ render_esi(url("ads_manager_show", { "id": "snapshot_popup" })) }}#}</div>' data-max-width="1800" data-max-height="2400">
+                                <div data-src="{% path galleryHasMedia.media, 'xlarge' %}" data-min-width="1300" onload="scaleImage()"></div>
+                                <div data-src="{% path galleryHasMedia.media, 'xlarge' %}" data-min-width="1000" onload="scaleImage();"></div>
+                                <div data-src="{% path galleryHasMedia.media, 'xlarge' %}" data-min-width="700" onload="scaleImage();"></div>
+                                <div data-src="{% path galleryHasMedia.media, 'large' %}" data-min-width="300" onload="scaleImage();"></div>
+                                <div data-src="{% path galleryHasMedia.media, 'large' %}" data-min-width="200" onload="scaleImage();"></div>
+                                <div data-src="{% path galleryHasMedia.media, 'large' %}" data-min-width="140" onload="scaleImage();"></div>
+                                <div data-src="{% path galleryHasMedia.media, 'medium' %}"></div>
+                                <noscript>
+                                <img src="{% path galleryHasMedia.media, 'medium' %}" alt="img01"/>
+                                </noscript>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <div class="gamma-overlay"></div>
+            </div>
+            <div class="page_pagination">
+
+                {% if (pagination) %}
+                    {{ knp_pagination_render(pagination, 'YallaWebsiteFrontendBundle:Template:pagination.html.twig') }}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block massonary %}
+    <script type="text/javascript" src="{{ asset('bundles/yallawebsitefrontend/js/socialite.min.js') }}"></script>
+    <script src="{{ asset('bundles/yallawebsitefrontend/js/sweetalert.min.js') }}"></script>
+    <script src="{{ asset('bundles/starrating/js/rating.js') }}"></script>
+    <script src="https://cdn.rawgit.com/codrops/GammaGallery/master/js/jquery.masonry.min.js"></script>
+    <script src="https://cdn.rawgit.com/codrops/GammaGallery/master/js/jquery.history.js"></script>
+    <script src="https://cdn.rawgit.com/codrops/GammaGallery/master/js/js-url.min.js"></script>
+    <script src="https://cdn.rawgit.com/codrops/GammaGallery/master/js/jquerypp.custom.js"></script>
+    <script src="https://cdn.rawgit.com/codrops/GammaGallery/master/js/gamma.js"></script>
+    <script type="text/javascript">
+                                    function fb_login(img) {
+                                        var gID = {{gallery.id}};
+                                                FB.getLoginStatus(function (response) {
+                                                    if (response.status === 'connected') {
+                                                        var uid = response.authResponse.userID;
+                                                        var token = uid + '-' + gID + '-' + img;
+                                                        voteAjax(img, token);
+                                                    } else {
+                                                        // not_authorized
+                                                        FB.login(function (response) {
+                                                            if (response.authResponse) {
+                                                                FB.api('/me', function (response) {
+                                                                    swal(response.name, "Thank You You Can Vote Now", "success");
+                                                                });
+                                                            } else {
+                                                                sweetAlert("You Must Be Logged In To Vote", "You Can't Vote Now", "error");
+                                                            }
+                                                        }, {scope: 'email'});
+                                                    }
+                                                });
+                                    }
+                                    function voteAjax(img, token) {
+                                        $.ajax({
+                                            type: "POST",
+                                            url: '{{ url('voting_upvote') }}?reference=' + img + '&value=1&token=' + token,
+                                            success: function (data) {
+                                                $('.gamma-single-view #vote' + img + ' span').first().html(data);
+                                                $('.gamma-single-view #vote' + img).css('color', '#fff');
+                                                $('.gamma-single-view #vote' + img).css('font-weight', 'bold');
+                                            },
+                                            error: function (xhr, textStatus, errorThrown) {
+                                                console.log(xhr.responseText);
+                                                console.log(textStatus);
+                                                console.log(errorThrown);
+                                            }
+                                        });
+                                    }
+                                    function scaleImage() {
+                                        var $img = $('.gamma-single-view img'),
+                                                imageWidth = $img.width, //need the raw width due to a jquery bug that affects chrome
+                                                imageHeight = $img.height, //need the raw height due to a jquery bug that affects chrome
+                                                maxWidth = $(window).width(),
+                                                maxHeight = $(window).height(),
+                                                widthRatio = maxWidth / imageWidth,
+                                                heightRatio = maxHeight / imageHeight;
+
+                                        var ratio = widthRatio; //default to the width ratio until proven wrong
+
+                                        if (widthRatio * imageHeight > maxHeight) {
+                                            ratio = heightRatio;
+                                        }
+
+//now resize the image relative to the ratio
+                                        $img.attr('width', imageWidth * ratio)
+                                                .attr('height', imageHeight * ratio);
+
+//and center the image vertically and horizontally
+                                        $img.css({
+                                            margin: 'auto',
+                                            position: 'absolute',
+                                            top: 0,
+                                            bottom: 0,
+                                            left: 0,
+                                            right: 0
+                                        });
+                                    }
+
+
+
+                                    $(document).ready(function () {
+                                        $(".gamma-description").css('display', 'none');
+                                        $(".gamma-single-view .gamma-description").css('display', 'block');
+
+                                        $(".gamma-single-view img").load( function(){
+                                            scaleImage();
+                                            console.log('Loaded');
+                                    });
+                                    
+                                    $(function () {
+                                            var GammaSettings = {
+                                                columns: 4,
+                                                // transition properties for the images in ms (transition to/from singleview)
+                                                speed: 300,
+                                                easing: 'ease',
+                                                // if set to true the overlay's opacity will animate (transition to/from singleview)
+                                                overlayAnimated: true,
+                                                // if true, the navigate next function is called when the image (singleview) is clicked
+                                                nextOnClickImage: true,
+                                                // circular navigation
+                                                circular: true,
+                                                // transition settings for the image in the single view.
+                                                // These include:
+                                                // - adjusting its position and size when the window is resized
+                                                // - fading out the image when navigating
+                                                svImageTransitionSpeedFade: 300,
+                                                svImageTransitionEasingFade: 'ease-in-out',
+                                                svImageTransitionSpeedResize: 300,
+                                                svImageTransitionEasingResize: 'ease-in-out',
+        svMarginsVH: {
+            vertical: 140,
+            horizontal: 120
+        },
+                                    // allow keybord and swipe navigation
+                                    keyboard: true,
+                                    swipe: true,
+                                    // slideshow interval (ms)
+                                    interval: 4000,
+                                    // if History API is not supported this value will turn false
+                                    historyapi: true,
+                                    // order is important!
+                                    viewport: [{
+                                            width: 1200,
+                                            columns: 5
+                                        }, {
+                                            width: 900,
+                                            columns: 4
+                                        }, {
+                                            width: 500,
+                                            columns: 3
+                                        }, {
+                                            width: 320,
+                                            columns: 2
+                                        }, {
+                                            width: 0,
+                                            columns: 2
+                                        }]
+                                };
+                                Gamma.init(GammaSettings);
+                            });
+                        });
+
+    </script>	
+
+{% endblock %}

@@ -1,0 +1,11 @@
+backend_ads_manager_index:
+    path:   /display/all
+    defaults:  { _controller: YallaWebsiteBackendBundle:AdsManager:index }
+    
+backend_ads_manager_change:
+    path:   /add/new/{id}/{index}
+    defaults:  { _controller: YallaWebsiteBackendBundle:AdsManager:change }
+    
+backend_ads_manager_save:
+    path:   /update/
+    defaults:  { _controller: YallaWebsiteBackendBundle:AdsManager:modify }    

@@ -1,0 +1,57 @@
+<script>
+    $('#one_article').click(function (e) {
+        e.preventDefault();
+        var Article = $('#dd_one_article').val();
+        $.ajax({
+            type: "POST",
+            url: Routing.generate('backend_ajax_update_featured_article', {id: Article}),
+            success: function (data) {
+                $('h4#ajaxTitle').text('Succcess');
+                $('#ajaxMessage p').text('Article Updated');
+                $('#ajaxResultMessages').modal('show');
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                console.log(xhr.responseText);
+                console.log(textStatus);
+                console.log(errorThrown);
+                $('h4#ajaxTitle').text('Error');
+                $('#ajaxMessage p').text('Error Contact Your Administrator.');
+                $('#ajaxResultMessages').modal('show');
+            }
+        });
+    });
+
+    var artLimit = 4;
+    $('input.single-checkbox').on('change', function (evt) {
+        if ($(this).siblings(':checked').length >= artLimit) {
+            this.checked = false;
+        }
+    });
+
+
+    $('#four_articles').click(function (e) {
+        e.preventDefault();
+        var art4message;
+        $('#multiple_select_articles :checked').each(function () {
+        console.log($(this));
+            $.ajax({
+                type: "POST",
+                url: Routing.generate('backend_ajax_update_four_articles', {id: $(this).val()}),
+                success: function (data) {
+                    console.log(data);
+                    $('h4#ajaxTitle').text('Success');
+                    $('#ajaxMessage p').text('Article Added to Homepage.');
+                    $('#ajaxResultMessages').modal('show');
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    console.log(xhr.responseText);
+                    console.log(textStatus);
+                    console.log(errorThrown);
+                    $('h4#ajaxTitle').text('Error');
+                    $('#ajaxMessage p').text('Error Contact Your Administrator.');
+                    $('#ajaxResultMessages').modal('show');
+                }
+            });
+        });
+    });
+</script>

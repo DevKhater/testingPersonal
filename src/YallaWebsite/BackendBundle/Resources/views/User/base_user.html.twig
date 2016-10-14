@@ -1,0 +1,14 @@
+{% extends "backend_base.html.twig" %}
+{% block title %}Users Section{% endblock %}
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <h4 class="page-head-line">Users</h4>
+        </div>
+    </div>
+    <div>
+        <a href="{{ path ('backend_user_new')}}"><button class="btn btn-primary create_new"><i class="fa fa-edit "></i>Create User</button></a>
+        {% block extraOptions %}{% endblock %}
+    </div>
+{% block controlleraction %}{% endblock %}
+{% endblock %}

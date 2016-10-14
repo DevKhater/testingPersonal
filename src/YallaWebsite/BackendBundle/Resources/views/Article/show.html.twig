@@ -1,0 +1,38 @@
+{% extends "YallaWebsiteBackendBundle:Article:base_article.html.twig" %}
+{% block extraOptions %}
+    <a href='{{ path ('backend_article_edit', {'id': entity.id})}}'><button class="btn btn-primary create_new"><i class="fa fa-edit "></i> Edit</button></a>
+    <a href='{{ path ('backend_article_delete', {'id': entity.id})}}'><button class="btn btn-primary create_new"><i class="fa fa-edit "></i> Delete</button></a>
+{% endblock %}
+
+{% block controlleraction  %}
+    <div class="row">
+        <div class='col-md-8'>
+            <h3>{{entity.title}} </h3>
+            <h6>{{entity.author.displayName}} </h6>
+
+            <div class="col-md-5"> 
+                <strong>Tags</strong>
+                {% if entity.getTags() %}
+                    {% for tag in entity.getTags %}
+                        <span class="label label-primary"> {{ tag.name }} </span>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-md-4">
+            {% thumbnail  entity.media, 'small' %}
+        </div>
+        <br style="clear: both" />
+        <br style="clear: both" />
+
+    </div>
+        <div class="col-md-12">
+            <h4>Description</h4>
+        {{entity.description}} </br>
+    </div>
+    <h3>Article</h3>
+    <div class="col-md-12" style="border: #000000 dotted ">
+        {{entity.content|raw}} </br>
+    </div>
+
+{% endblock %}

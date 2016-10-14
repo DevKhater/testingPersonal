@@ -1,0 +1,22 @@
+{% extends "YallaWebsiteBackendBundle:Gallery:base_gallery.html.twig" %}
+{% block controlleraction  %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Agg Images To Gallery
+        </div>
+        <div class="panel-body">
+            <form enctype="multipart/form-data" action="{{ path('backend_gallery_add_images_gallery', {'id': data}) }}" method="POST">
+                <div class="form-group">
+                    <label for="media">Add Images</label>
+                    {{ form_widget(addForm)}}
+                    <p class="help-block">Only Images.</p>
+                </div>
+
+                {{ form_errors(addForm) }}
+                {{ form_row(addForm._token) }}
+                <input type="submit" class="btn btn-default" value="Save"/>
+        </div>
+
+    </form>
+</div>
+{% endblock %}

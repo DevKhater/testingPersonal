@@ -1,0 +1,35 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/book/service_container.html
+parameters:
+#    parameter_name: value
+    backend_manager.class: YallaWebsite\BackendBundle\Factory\BackendManager
+    yaml_manager.class: YallaWebsite\BackendBundle\Factory\YamlManager
+    frontend_manager.class: YallaWebsite\FrontendBundle\Factory\FrontendManager
+
+services:
+    app.custom_sitemap_service:
+            class: YallaWebsite\BackendBundle\Model\SitemapIterator  
+    sonata.media.resizer.custom:
+        class: Application\Sonata\MediaBundle\Resizer\FixedDimensionsResizer
+        arguments: [@sonata.media.adapter.image.gd, 'outbound', @sonata.media.metadata.proxy]
+    
+    my_user_provider:
+        class: YallaWebsite\BackendBundle\Security\Core\User\FOSUBUserProvider
+        #this is the place where the properties are passed to the UserProvider - see config.yml
+        arguments: [@fos_user.user_manager,{facebook: facebook_id}]
+        
+    sonata.media.security.users_strategy:
+        class:     Application\Sonata\MediaBundle\Security\UsersDownloadStrategy
+        arguments: ['@security.token_storage', '@translator', ['mozart', 'chopin']]
+        
+    backend_manager.manager:
+        class: YallaWebsite\BackendBundle\Factory\BackendManager
+        arguments: [ @doctrine.orm.entity_manager, @sonata.media.manager.media ]
+    yaml_manager.manager:
+        class: %yaml_manager.class%
+        arguments: [ @sonata.media.manager.media ]
+    twig.extension.class_twig_extension:
+        class : YallaWebsite\BackendBundle\Twig\Extensions\ClassTwigExtension
+        tags:
+            - { name: 'twig.extension' }
+        arguments : [ ]

@@ -1,0 +1,38 @@
+    /**
+     * Add photographers
+     *
+     * @param \YallaWebsite\BackendBundle\Entity\Photographer $photographers
+     * @return Gallery
+     */
+    public function addPhotographer(\YallaWebsite\BackendBundle\Entity\Photographer $photographers)
+    {
+        $this->photographers[] = $photographers;
+        
+        
+    }
+
+   public function hasPhotographer(\YallaWebsite\BackendBundle\Entity\Photographer $photographer)
+    {
+            return $this->getPhotographers()->contains($photographer);
+    }
+
+
+    /**
+     * Remove photographers
+     *
+     * @param \YallaWebsite\BackendBundle\Entity\Photographer $photographers
+     */
+    public function removePhotographer(\YallaWebsite\BackendBundle\Entity\Photographer $photographers)
+    {
+        $this->photographers->removeElement($photographers);
+    }
+
+    /**
+     * Get photographers
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPhotographers()
+    {
+        return $this->photographers;
+    }

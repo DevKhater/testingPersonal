@@ -1,0 +1,31 @@
+backend_gallery_index:
+    path:   /
+    defaults:  { _controller: YallaWebsiteBackendBundle:Gallery:index }
+backend_gallery_show:
+    path:   /show/{id}
+    defaults:  { _controller: YallaWebsiteBackendBundle:Gallery:show }
+backend_gallery_edit:
+    path: /edit/{id}/
+    defaults:  { _controller: YallaWebsiteBackendBundle:Gallery:edit }
+backend_gallery_new:
+    path:   /new
+    defaults:  { _controller: YallaWebsiteBackendBundle:Gallery:new }
+backend_gallery_add_images_gallery:
+    path: /add/{id}/
+    defaults:  { _controller: YallaWebsiteBackendBundle:Gallery:addImages }
+backend_gallery_delete_image:
+    path: /deleteImage/{id}/{galleryid}
+    defaults:  { _controller: YallaWebsiteBackendBundle:Gallery:deleteImage }
+backend_gallery_set_preview:
+    path: /preview/{id}
+    defaults:  { _controller: YallaWebsiteBackendBundle:Gallery:setGalleryPreview }
+backend_gallery_delete:
+    path: /delete/{id}
+    defaults:  { _controller: YallaWebsiteBackendBundle:Gallery:deleteGallery }
+
+backend_gallery_ajax_set_preview:
+    path: /ajax/set/preview
+    defaults:  { _controller: YallaWebsiteBackendBundle:Gallery:setAjaxGalleryPreview }
+backend_ajax_delete_tag:
+  pattern:  /ajax/delete/tag
+  defaults: { _controller: YallaWebsiteBackendBundle:Gallery:delAjaxGalleryTag }

@@ -1,0 +1,117 @@
+{% extends "backend_base.html.twig" %}
+{% block title %}Homepage Section{% endblock %}
+{% block body %}
+    {{ dump(homepage) }}
+    <div class="row">
+        {% set  arr = [events, articles, venues, galleries]%}
+        <div class="col-md-12">
+            <h4 class="page-head-line">Homepage</h4>
+            <p><a href={{path('backend_homepage_about')}}>About/Vision</a></p>
+        </div>
+
+    </div>
+    <div class="col-md-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Homepage Top Part
+            </div>
+            <div id='HomePagePartOne' class="panel-body">
+                <div class="col-md-12">
+                    {% include '@YallaWebsiteBackendBundle/views/Homepage/html/homepage_backend_slider.html.twig' %}
+                </div>
+
+                <div class="col-md-12">
+                    {% include '@YallaWebsiteBackendBundle/views/Homepage/html/homepage_backend_video.html.twig' %}
+                </div>
+
+                <div class="col-md-12">
+                    {% include '@YallaWebsiteBackendBundle/views/Homepage/html/homepage_backend_selected_gallery.html.twig' %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="col-md-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Homepage Middle Part
+            </div>
+            <div id='HomePagePartTwo' class="panel-body">
+                <h5><strong>Homepage Article Section</strong></h5>
+                {{dump(homepage.sideArticles)}}
+                <div class="col-md-12">
+                    {% include '@YallaWebsiteBackendBundle/views/Homepage/html/homepage_backend_selected_article.html.twig' %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+
+    <div class="col-md-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Homepage Bottom Part
+            </div>
+            <div id='HomePagePartThree' class="panel-body">
+                <h5><strong>Homepage Events Section</strong></h5>
+                {{ dump (homepage.weekEvents) }}
+                <div class="col-md-12">
+                    {% include '@YallaWebsiteBackendBundle/views/Homepage/html/homepage_backend_week_events.html.twig' %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+
+    <!-- Modal -->
+    <div class="modal fade" id="ajaxResultMessages" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" id="ajaxTitle"></h4>
+                </div>
+                <div class="modal-body" id="ajaxMessage">
+                    <p></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+    {% include '@YallaWebsiteBackendBundle/views/Homepage/js/homepage_slider_js.html.twig' %}
+    <script>
+        function updateSlider(v, p, t) {
+            $.ajax({
+                type: "POST",
+                url: Routing.generate('backend_ajax_set_slider', {id: v, pos: p, type: t}),
+                success: function (data) {
+                    $('#ajaxDiv').css('display', 'block');
+                    $('#ajaxDiv').html(data);
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    console.log(xhr.responseText);
+                    console.log(textStatus);
+                    console.log(errorThrown);
+                    $('h4#ajaxTitle').text('Error');
+                    $('#ajaxMessage p').text(errorThrown);
+                    $('#ajaxResultMessages').modal('show');
+                }
+            });
+        }
+        ;
+    </script>
+    {% include '@YallaWebsiteBackendBundle/views/Homepage/js/homepage_video_js.html.twig' %}
+    {% include '@YallaWebsiteBackendBundle/views/Homepage/js/homepage_gallery_js.html.twig' %}
+    {% include '@YallaWebsiteBackendBundle/views/Homepage/js/homepage_one_article_js.html.twig' %}
+    {% include '@YallaWebsiteBackendBundle/views/Homepage/js/homepage_week_events_js.html.twig' %}
+{%endblock%}

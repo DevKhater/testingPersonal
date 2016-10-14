@@ -1,0 +1,22 @@
+{% extends "backend_base.html.twig" %}
+{% block title %}Events Section{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('assets/vendor/jquery-simple-datetimepicker/jquery.simple-dtpicker.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <h4 class="page-head-line">Events</h4>
+        </div>
+    </div>
+    <div>
+        <a href="{{ path ('backend_event_new')}}"><button class="btn btn-primary create_new"><i class="fa fa-edit "></i> Create New</button></a>
+    {% block extraOptions %}{% endblock %}
+</div>
+{% block controlleraction %}{% endblock %}
+{% endblock %}
+{% block datepicker %}
+<script src="{{ asset('assets/vendor/jquery-simple-datetimepicker/jquery.simple-dtpicker.js') }}"></script>
+{% endblock %}

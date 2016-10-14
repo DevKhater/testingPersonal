@@ -1,0 +1,28 @@
+services:    
+    frontend_manager.manager:
+        class: %frontend_manager.class%
+        arguments: [ @doctrine.orm.entity_manager, @sonata.media.manager.media ]
+    app.calendar_listener:
+        class: YallaWebsite\FrontendBundle\EventListener\CalendarEventListener
+        arguments: ['@doctrine.orm.entity_manager', '@service_container']
+        tags:
+            - { name: kernel.event_listener, event:calendar.load_events, method:loadEvents }
+    app.socialBarHelper:
+        class : YallaWebsite\FrontendBundle\Templating\Helper\SocialBarHelper
+        tags : 
+            - {name : 'templating.helper', alias : 'social-buttons'} 
+        arguments : [ @templating ]
+    twig.extension.ynl_social_bar:
+        class : YallaWebsite\FrontendBundle\Twig\Extensions\YNLTwigSocialBar
+        tags:
+            - { name: 'twig.extension' }
+        arguments : [ @service_container ]
+    twig.extension.vote_extension:
+        class : YallaWebsite\FrontendBundle\Twig\Extensions\VoteExtension
+        tags:
+            - { name: 'twig.extension' }
+        arguments : [ @service_container ] 
+    twig.extension.array:
+       class: Twig_Extensions_Extension_Array
+       tags:
+            - { name: twig.extension }

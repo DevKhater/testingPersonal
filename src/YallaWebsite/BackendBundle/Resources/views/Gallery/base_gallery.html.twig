@@ -1,0 +1,35 @@
+{% extends "backend_base.html.twig" %}
+{% block title %}Galleries Section{% endblock %}
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <h4 class="page-head-line">Galleries</h4>
+        </div>
+    </div>
+    <div>
+        <a href="{{ path ('backend_gallery_new')}}"><button class="btn btn-primary create_new"><i class="fa fa-edit "></i> Create New</button></a>
+    {% block extraOptions %}{% endblock %}
+    {% if entity is defined %}
+        <div>
+            <strong>Gallery Name : </strong>
+            <a href="{{path ('backend_gallery_show',  {'id': entity.id}) }}">{{entity.name}}</a><br/>
+        {% if pagination is defined %}{% if pagination is not empty %}<strong>Number of Images : </strong>{{ pagination.getTotalItemCount }}<br/>{% endif %}{% endif %}
+
+    </div>
+    <div class='row'>
+        <div class="col-md-12" style="font: 20px;;">
+            <a href='{{ path ('backend_gallery_edit', {'id': entity.id})}}'><span class="label label-primary">Add Tags/Chanege Gallery Name</span></a>
+            <a href="{{ path ('backend_gallery_add_images_gallery',  {'id': entity.id})}}"><span class="label label-primary">Add Images To Gallery</span></a>
+            <a href="{{ path ('backend_gallery_set_preview',  {'id': entity.id})}}"><span class="label label-primary">Set Gallery Preview Image</span></a>
+        </div>
+    </div>
+{%endif%}
+</div>
+{% block controlleraction %}{% endblock %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent()}}
+
+<script src="{{ asset('assets/vendor/image-picker/image-picker/image-picker.js') }}"></script>
+{% endblock %}

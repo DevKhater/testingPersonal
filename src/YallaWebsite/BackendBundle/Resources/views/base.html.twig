@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% block title %}Yalla Nightlife Backend - {% endblock %}</title>
+        <link href="{{ assets ('css/bootstrap.min.css') }}" rel="stylesheet">
+        {% block stylesheets %}{% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body>
+        {% block body %}{% endblock %}
+        
+            <script src="{{ asstes ('js/jquery.min.js') }}"></script>
+            <!-- Include all compiled plugins (below), or include individual files as needed -->
+            <script src="{{ asstes ('js/bootstrap.min.js') }}"></script>
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

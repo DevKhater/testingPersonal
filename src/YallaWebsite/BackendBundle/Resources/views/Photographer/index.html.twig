@@ -1,0 +1,58 @@
+{% extends "YallaWebsiteBackendBundle:Photographer:base_photographer.html.twig" %}
+{% block controlleraction  %}
+    {% if entities is empty %}
+        <div class="alert alert-info" role="alert">
+            <strong>No Photographers!</strong> Found in database.
+        </div>
+    {% else %}
+        <div class="row">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    Photographers Information
+                </div>
+                <div class="panel-body">
+                    <p><strong>Number of Photographers :</strong> <span class="badge badge-inverse">{{ entities|length }}</span></p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-md-12 col-sm-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        Photographers Listing
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered table-hover zebra">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Photographer Name</th>
+                                        <th> Website </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for photographer in entities %}
+                                        <tr>
+                                            <td style="text-align: center;">
+                                                <a href="{{path ('backend_photographer_delete',  {'id': photographer.id}) }}"><button class="btn btn-danger btn-sm"><i class="fa fa-pencil"></i> Delete</button></a>
+                                                <a href="{{path ('backend_photographer_show',  {'id': photographer.id}) }}"><button class="btn btn-primary btn-sm"><i class="fa fa-eye"></i> View </button></a>
+                                            </td>
+                                            <td><a href="{{ path ('backend_photographer_edit',  {'id': photographer.id})}}">{{photographer.name}}</a></td>
+                                            <td>{{photographer.website}}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        ....
+                    </div>
+                </div>
+            </div>        
+
+        </div>
+    {% endif %}
+{% endblock %}

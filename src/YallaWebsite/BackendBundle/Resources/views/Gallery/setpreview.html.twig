@@ -1,0 +1,60 @@
+{% extends "YallaWebsiteBackendBundle:Gallery:base_gallery.html.twig" %}
+{% block controlleraction  %}
+    <div class="row">
+        <div id='savingButton' class="col-md-12" style="display:none;text-align: center; cursor: pointer; background-color: red; color: white"><span class="savepreview">SAVE</span></div>
+        <div class="alert alert-success"></div>
+        {% if pagination is empty %}
+        {% else %}
+            <div class="col-md-12">
+
+                <select class="image-picker">
+                    {% for media in pagination %}
+                        <option data-img-src="{% path media.media, 'preview' %}" value="{{media.media.id}}">  {{media.id}}  </option>
+                    {% endfor %}
+                </select>
+
+            </div>
+        {% endif %}
+    </div>
+    <div>
+    	
+            {% if (pagination) %}
+                {{ knp_pagination_render(pagination, 'YallaWebsiteFrontendBundle:Template:pagination.html.twig') }}
+            {% endif %}
+
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+{{parent()}}
+    <script>
+        if ($("select").imagepicker({
+            hide_select: true,
+            show_label: false
+        }) ) {
+        console.log('success');
+        }
+        function aButtonPressed(pid) {
+            $.post('{{path('backend_gallery_ajax_set_preview')}}',
+                    {id: pid, g: '{{entity.id}}'},
+                    function (response) {
+                        if (response.code == 100) {//dummy check
+                            alertSucc();
+                        }
+                    }, "json");
+        }
+        function alertSucc() {
+            $('.alert').show();
+            $('.alert').append("<p>Gallery Image Preview Set Successfully</p>");
+        }
+        $(document).ready(function () {
+            $('.alert').hide();
+            $('#savingButton').css('display', 'block');
+            $('.savepreview').on('click', function () {
+                var pid = $("select").val();
+                aButtonPressed(pid);
+            });
+        });
+       </script>
+
+{% endblock %}

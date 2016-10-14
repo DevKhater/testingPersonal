@@ -1,0 +1,22 @@
+backend_artist_index:
+    path:   /
+    defaults:  { _controller: YallaWebsiteBackendBundle:Artist:index }
+
+backend_artist_new:
+    path:   /new
+    defaults:  { _controller: YallaWebsiteBackendBundle:Artist:new }
+backend_artist_show:
+    path:   /show/{id}
+    defaults:  { _controller: YallaWebsiteBackendBundle:Artist:show }
+    requirements: 
+          id: \d+
+backend_artist_edit:
+    path:   /edit/{id}
+    defaults:  { _controller: YallaWebsiteBackendBundle:Artist:edit }
+    requirements: 
+          id: \d+
+backend_artist_delete:
+    path: /delete/{id}
+    defaults:  { _controller: YallaWebsiteBackendBundle:Artist:delete }
+    requirements: 
+          id: \d+

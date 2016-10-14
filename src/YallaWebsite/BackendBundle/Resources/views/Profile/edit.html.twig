@@ -1,0 +1,39 @@
+{% extends "YallaWebsiteBackendBundle:Profile:base_profile.html.twig" %}
+{% block controlleraction  %}
+    <div class="row">
+        <div class="col-md-8">
+            <form enctype="multipart/form-data" action="{{ path('backend_profile_edit') }}" method="POST">
+                
+                    <div class="form-group">
+                        <label for="title">Display Image</label>
+                        {{ form_widget(form.media)}}
+                        <p class="help-block">Only Images.</p>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="form-group">
+                        <label>Username</label> {{ app.user.username }}<br/>
+                        <label>Email</label> {{ app.user.email}}<br/>
+                        <label>Last Login</label> {{ app.user.lastLogin|date("F jS \\a\\t g:ia")}}<br/>
+                    </div>
+                    <label>Display Name</label>
+                    {{ form_widget(form.displayName) }}
+                    <br>
+                    <div class="form-group">
+                        <label for="title">Short Biography</label>
+                        {{ form_widget(form.shortBio)}}
+                        
+                    </div>
+
+                {{ form_errors(form) }}
+                {{ form_row(form._token) }}
+                    <input type="submit" class="btn btn-default" value="Save"/>
+            </form>
+        </div>
+    </div>
+                        <div class="col-md-4">
+                            {% if entities.media is not empty%}{% media entities.media, 'preview' with {'class': 'myclass'}%}{% endif %}
+                        </div>
+
+
+{% endblock %}

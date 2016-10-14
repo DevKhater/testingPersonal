@@ -1,0 +1,33 @@
+{% extends "YallaWebsiteBackendBundle:Profile:base_profile.html.twig" %}
+{% block controlleraction  %}
+<div class="row">
+                <div class="col-md-4">
+                    
+                    {% if entities.media is not empty%}{% media entities.media, 'preview' with {'class': 'myclass'}%}{% endif %}
+                    <br>
+                    <br>
+                    <label>Registered Username</label> : {{ app.user.username }}<br/>
+                    <label>Registered Email</label> : {{ app.user.email }}<br/>
+                    <label>Last Login</label> : {{ app.user.lastlogin|date() }}<br/>
+                    <label>Display Name</label> : {{ entities.displayName }}<br/>
+                </div>
+                <div class="col-md-8">
+                    {% if entities.shortBio is defined %}
+                    <div class="alert alert-info">
+                        {% if entities.shortBio is not empty %}
+                        <h2>User Bio : </h2>
+                        <p>{{ entities.shortBio }}</p>
+                        {% else %}
+                        <p>There is No Biography To Display</p>
+                        {% endif %}
+                    </div>
+                    {% endif %}    
+                    <div class="form-group col-md-8">
+                        <h3>Change Your Password</h3>
+                        <br>
+                        <a href="{{path ('fos_user_change_password')}}" class="btn btn-warning">Change Password</a>
+                    </div>
+                </div>
+            </div>
+
+{% endblock %}

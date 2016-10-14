@@ -1,0 +1,46 @@
+{% extends "YallaWebsiteBackendBundle:Event:base_event.html.twig" %}
+{% block extraOptions %}
+    <a href="{{ path ('backend_event_edit', {'id': entity.id})}}"><button class="btn btn-primary create_new"><i class="fa fa-edit "></i> Edit</button></a>
+    <a href="{{ path ('backend_event_delete', {'id': entity.id})}}"><button class="btn btn-primary create_new"><i class="fa fa-edit "></i> Delete</button></a>
+{% endblock %}
+
+{% block controlleraction  %}
+    <div class='col-md-8'>
+        <div class='col-md-8'>
+            <strong>Name : </strong>{{entity.title}} <br/>
+            {% if entity.isVenue == false %}
+                <strong>Address : </strong>{{entity.location.address }} <br/>
+                <strong>Telephone : </strong>{{entity.location.telephone }} <br/>
+            {% else %}
+                <strong>Venue : </strong> {{entity.venue.title }}<br />
+                <strong><i>Address : </i></strong>{{entity.venue.location.address }} <br/>
+                <strong><i>Telephone : </i></strong>{{entity.venue.location.telephone }} <br/>
+            {% endif %}
+            {% if entity.startDate|date("F jS") ==  entity.endDate|date("F jS") %} 
+                <strong>Date : </strong>{{entity.startDate|date("F jS")}} <br/>
+                &emsp;&emsp;Start : {{entity.startDate|date("g:ia")}}
+                &emsp;&emsp;End : {{entity.endDate|date("g:ia")}}<br/>
+            {% else %}
+                <strong>Start Date : </strong>{{entity.startDate|date("F jS \\a\\t g:ia")}} <br/>
+                <strong>End Date : </strong>{{entity.endDate|date("F jS \\a\\t g:ia")}} <br/>
+            {% endif %}
+            <strong>Description : </strong>{{entity.content|raw}} <br/>
+            <strong>Tags</strong>
+            {% if entity.getTags() %}
+                {% for tag in entity.getTags %}
+                    <span class="label label-primary"> {{ tag.name }} </span>
+                {% endfor %}
+            {% endif %}<br/>
+            <strong>Similar Artists</strong>
+            {% if entity.getSimilarArtist %}
+                {% for art in entity.getSimilarArtist %}
+                    <p> <a href='{{ path('backend_artist_show', {id: art.id}) }}'>{{ art.title }}</a> <p>
+                {% endfor %}
+            {% endif %}
+            
+            
+        </div>
+        <div class="col-md-4">
+            {% thumbnail  entity.media, 'medium' %}
+        </div>
+    {% endblock %}

@@ -1,0 +1,49 @@
+yalla_website_frontend:
+    resource: "@YallaWebsiteFrontendBundle/Resources/config/routing.yml"
+    prefix:   /
+    
+yalla_website_mod:
+    resource: "@YallaWebsiteModBundle/Resources/config/routing.yml"
+    prefix:   /mod
+    
+yalla_website_backend:
+    resource: "@YallaWebsiteBackendBundle/Resources/config/routing.yml"
+    prefix:   /backend
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
+
+gallery:
+    resource: '@ApplicationSonataMediaBundle/Resources/config/routing/gallery.xml'
+    prefix: /snapshots
+    
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+
+KunstmaanVotingBundle:
+    resource: "@KunstmaanVotingBundle/Resources/config/routing.yml"
+    prefix:   /secured/vote
+
+hwi_oauth_security:
+    resource: "@HWIOAuthBundle/Resources/config/routing/login.xml"
+    prefix: /secured/connect
+
+hwi_oauth_connect:
+    resource: "@HWIOAuthBundle/Resources/config/routing/connect.xml"
+    prefix: /secured/connect
+
+hwi_oauth_redirect:
+    resource: "@HWIOAuthBundle/Resources/config/routing/redirect.xml"
+    prefix:   /secured/connect
+
+hwi_oauth_login:
+    resource: "@HWIOAuthBundle/Resources/config/routing/login.xml"
+    prefix:   /secured/login
+    
+facebook_login:
+    path: /secured/login/login_facebook
+    defaults: { _controller: YallaWebsiteFrontendBundle:Default:FaceBookRedirect }

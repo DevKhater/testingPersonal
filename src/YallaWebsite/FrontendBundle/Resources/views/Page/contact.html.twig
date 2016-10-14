@@ -1,0 +1,45 @@
+{# empty Twig template #}
+{% extends "@YallaWebsiteFrontendBundle/views/front_base.html.twig" %}
+{% block body %}
+    <div class="wrapper">
+        <div class="innerPagesTitle">
+            <h1>Contact Us</h1>
+        </div>
+        <div id="Messages" class="col-xs-12" style="text-align: center; margin: 0 auto;">
+                {% for label, flashes in app.session.flashbag.all %}
+                    {% for flash in flashes %}
+                        <div class="alert alert-{{ label }}">
+                            {{ flash }}
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+        </div>
+        <div class="col-xs-3"></div>
+        <style>
+            #contact div {
+                margin-bottom: 15px;
+            }
+            #contact input, 
+            #contact textarea {
+                background-color: #565656;
+                color: white;
+            }
+            #contact_submit {
+                background-color: #565656;
+                color: #ffde16;
+                width: 30%;
+                text-align: center;
+                margin: 0 auto;
+            }
+            @media screen and (max-width: 468px){
+                #contact_submit {width:60%;}
+            }
+        </style>
+        <div id="contact_form" class="col-xs-6" style="text-align: center; margin: 0 auto;">
+            <form action="{{ path('yalla_website_frontend_page_contact') }}" method="post" >
+                {{ form_widget(form) }} 
+                <button id='contact_submit' type="submit" class="homePageButtons form-control">Send</button>
+                </form>
+        </div>
+    </div>
+    {% endblock %}

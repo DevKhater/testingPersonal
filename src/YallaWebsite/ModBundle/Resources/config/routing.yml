@@ -1,0 +1,3 @@
+yalla_website_mod_homepage:
+    path:     /
+    defaults: { _controller: YallaWebsiteModBundle:Default:index }

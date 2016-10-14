@@ -1,0 +1,22 @@
+backend_venue_index:
+    path:   /
+    defaults:  { _controller: YallaWebsiteBackendBundle:Venue:index }
+
+backend_venue_new:
+    path:   /new
+    defaults:  { _controller: YallaWebsiteBackendBundle:Venue:new }
+backend_venue_show:
+    path:   /show/{id}
+    defaults:  { _controller: YallaWebsiteBackendBundle:Venue:show }
+    requirements: 
+          id: \d+
+backend_venue_edit:
+    path:   /edit/{id}
+    defaults:  { _controller: YallaWebsiteBackendBundle:Venue:edit }
+    requirements: 
+          id: \d+
+backend_venue_delete:
+    path: /delete/{id}
+    defaults:  { _controller: YallaWebsiteBackendBundle:Venue:delete }
+    requirements: 
+          id: \d+

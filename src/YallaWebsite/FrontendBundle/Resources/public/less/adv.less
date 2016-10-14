@@ -1,0 +1,93 @@
+/*GeneralSettings*/
+.AdvinRows {
+    .make-xs-column(5);
+    min-height: 50px;
+    img {
+        max-width: 100%;
+    }
+}
+.Adv_Display {
+    @media only screen and (max-width : 480px) {
+        display: none;
+    }
+}
+
+/*Right-Left Adv*/
+.bodyColAdv {
+    position: absolute;
+    max-width: 100px;
+    min-height: 40px;
+    background-color: @tempColor - 200;
+    top: 40%;
+    z-index:-10;
+    .clearfix;
+    @media only screen and (max-width : 767px) {
+        display:none;
+    }
+    
+    @media only screen and (min-width : 768px) and (max-width : 992px) {
+        max-width: 90px;
+    }
+    img {
+        width: 120px;
+        height: 556px;
+
+    }
+}
+#bodyLeftAdv{ left:0; }
+#bodyRightAdv{ right: 0 }
+
+/*Header and Footer Adv*/
+.anyAdvRow{
+    .row();
+    margin-top: 15px;
+    min-height: 50px;
+    .leftAdv_row,.rightAdv_row{
+        .AdvinRows;
+        img {
+            height: 90px;
+            width: 590px;
+        }
+    }
+    .leftAdv_row {
+        float: left;
+        img {
+            float: left;
+        }
+        @media only screen and (min-width : 481px) and (max-width : 767px) {
+            .make-xs-column(12);
+            text-align:center;
+            margin: 0 auto;
+            float: none;
+            img {
+                text-align:center;
+                margin: 0 auto;
+                float: none;
+            }
+        }
+    }
+    .rightAdv_row {
+        float: right;
+        img {
+            float: right;
+        }
+        @media only screen and (min-width : 481px) and (max-width : 767px) {
+            display: none;
+        }
+    }
+}
+
+/* snapshot Adv */
+
+#SS_ADV {
+    text-align: center;
+    margin:0 auto;
+    max-width: 100%;
+    img {
+        margin: 0 auto;
+        .img-responsive;
+    }
+    @media only screen and (max-width : 767px) {
+        display:none;
+    }
+}

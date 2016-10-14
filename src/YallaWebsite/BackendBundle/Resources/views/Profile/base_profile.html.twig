@@ -1,0 +1,18 @@
+{% extends "backend_base.html.twig" %}
+{% block title %}Profile Section{% endblock %}
+{% block stylesheets %}
+{% endblock %}
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <h4 class="page-head-line">Profile</h4>
+        </div>
+    </div>
+        <div id="edit_profile_div_head">
+        <a href='{{ path ('backend_profile_edit')}}'><button class="btn btn-primary create_new"><i class="fa fa-edit "></i>Edit Profile</button></a>
+        {% block extraOptions %}{% endblock %}
+    </div>
+        {% block fos_user_content %}{% endblock %}
+{% block controlleraction %}{% endblock %}
+{% endblock %}
+

@@ -1,0 +1,15 @@
+{% extends "backend_base.html.twig" %}
+{% block title %}Member Section{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <h4 class="page-head-line">Members</h4>
+        </div>
+    </div>
+    <div>
+        <a href="{{ path ('backend_member_new')}}"><button class="btn btn-primary create_new"><i class="fa fa-edit "></i> Create New</button></a>
+        {% block extraOptions %}{% endblock %}
+    </div>
+{% block controlleraction %}{% endblock %}
+{% endblock %}

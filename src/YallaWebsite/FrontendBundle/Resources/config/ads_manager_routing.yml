@@ -1,0 +1,3 @@
+ads_manager_show:
+    path:   /get/{id}
+    defaults:  { _controller: YallaWebsiteBackendBundle:AdsManager:display }

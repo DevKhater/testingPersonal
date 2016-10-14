@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html {{ sonata_seo_html_attributes() }}>
+    <head {{ sonata_seo_head_attributes() }}>
+        {{ sonata_seo_title() }}
+        {{ sonata_seo_metadatas() }}
+        {% block meta %}{% endblock meta %}
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        {{ sonata_seo_link_canonical() }}
+        {{ sonata_seo_lang_alternates() }}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}?v=2" />
+        {% stylesheets '@bootstrap_css'  '@frontend_css' '@fontawesome_css' filter='lessphp' combine=true %}
+        <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}"/>
+        {% endstylesheets %}
+    {% block stylesheets %}{% endblock %}
+    <style>
+        .socialMediaShareDiv a {
+            text-decoration: none;
+        }
+    </style>
+    <!-- HTML5 Shiv and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+    <div class="loader">
+        {% image '@YallaWebsiteFrontendBundle/Resources/public/images/base/logo.png' %}
+                <img id='logo_icon' src="{{ asset_url }}" alt="YNL Logo" />
+                {% endimage %}
+    </div>
+    <div id="fb-root"></div>
+    <script>
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '516228625234128',
+                xfbml: true,
+                version: 'v2.6'
+            });
+        };
+
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {
+                return;
+            }
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+
+
+    <header class="clearfix">
+        <div id="preHeader"></div>
+        {% include '@YallaWebsiteFrontendBundle/views/Template/menu.html.twig' %}
+        <div class='anyAdvRow Adv_Display'>
+            <div class='leftAdv_row'>{{ render_esi(url('ads_manager_show', { 'id': 'home_header_first' })) }}</div>
+            <div class='rightAdv_row'>{{ render_esi(url('ads_manager_show', { 'id': 'home_header_second' })) }}</div>
+        </div>
+        <div id='socialSearchRow'>
+
+            <div id='socialLinks'>{{ render_esi(url('social_media_follow_us')) }}</div>
+            <div id='searchBar'></div>
+        </div>
+    </header>
+    <div class="pageContent">
+        <div id="bodyLeftAdv" class="Adv_Display bodyColAdv">{{ render_esi(url('ads_manager_show', { 'id': 'home_body_first' })) }}</div>
+    {% block body %}{% endblock %}
+    <div id="bodyRightAdv" class="Adv_Display bodyColAdv">{{ render_esi(url('ads_manager_show', { 'id': 'home_body_second' })) }}</div>
+</div>
+<footer>
+    <div class='anyAdvRow Adv_Display'>
+        <div class='leftAdv_row'>{{ render_esi(url('ads_manager_show', { 'id': 'home_footer_first' })) }}</div>
+        <div class='rightAdv_row'>{{ render_esi(url('ads_manager_show', { 'id': 'home_footer_second' })) }}</div>
+    </div>
+    <div id="footerContent">
+
+        <div class="wrapper">
+            <div class='col-xs-3' style="background-image: url('{{asset('bundles/yallawebsitefrontend/images/base/PlatCaiFooter.png')}}');height: 100px;background-position: center center;background-repeat: no-repeat;background-size: contain;">
+            </div>
+            <div class="col-xs-6 text-center">
+                <div id='copyright_text'>
+                <p>&copy; 2016 YallaNightLife. All Rights Reserved.</p>
+                </div>
+            </div>
+            <div class='col-xs-3'>
+                <div id='b2t'>
+                <a href="javascript:" id="return-to-top">
+                    {% image '@YallaWebsiteFrontendBundle/Resources/public/images/backTop.png' %}
+                    <img src="{{ asset_url }}" alt="BackToTop" class="img-responsive"/>
+                    {% endimage %}
+                </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+{% javascripts '@jquery' '@bootstrap_js' %}
+<script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}
+<script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+<script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.js"></script>
+<script type="text/javascript" src="{{ asset('bundles/yallawebsitefrontend/js/socialite.min.js') }}"></script>
+{% block javascripts %}{% endblock %}
+{% block js_calednar %}{% endblock %}
+{% block massonary %}{% endblock %}
+<script>
+$(window).scroll(function() {
+    if ($(this).scrollTop() >= 50) {        // If page is scrolled more than 50px
+        $('#return-to-top').fadeIn(200);    // Fade in the arrow
+    } else {
+        $('#return-to-top').fadeOut(200);   // Else fade out the arrow
+    }
+});
+$('#return-to-top').click(function() {      // When arrow is clicked
+    $('body,html').animate({
+        scrollTop : 0                       // Scroll to top of body
+    }, 500);
+});
+$(window).load(function() {
+        $(".loader").fadeOut("slow");;
+    });
+    $(document).ready(function() {
+        Socialite.load();
+    });
+</script>
+</body>
+</html>

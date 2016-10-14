@@ -1,0 +1,109 @@
+{% extends "backend_base.html.twig" %}
+{% block title %}Homepage Section{% endblock %}
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <h4 class="page-head-line">About / Vision</h4>
+            <p><a href={{path('backend_homepage_index')}}>Back to Hoomepage</a></p>
+        </div
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Edit About Us
+                </div>
+                <div class="panel-body">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <textarea id="__about" placeholder="About..." class="form-control" rows="10">{{about}}</textarea>
+                            <a id='update_about' href='#' class='btn-sm btn-default'>Update About</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Edit Vision
+                </div>
+                <div class="panel-body">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <textarea id="__vision" placeholder="Vision..." class="form-control" rows="10">{{vision}}</textarea>
+                            <a id='update_vision' href='#' class='btn-sm btn-default'>Update Vision</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="ajaxResultMessages" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" id="ajaxTitle"></h4>
+                </div>
+                <div class="modal-body" id="ajaxMessage">
+                    <p></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+    <script>
+        $(document).ready(function () {
+            $('#update_about').click(function (e) {
+                e.preventDefault();
+                var Type = 'about';
+                update(Type, $('#__about').val());
+            });
+            $('#update_vision').click(function (e) {
+                e.preventDefault();
+                var Type = 'vision';
+                update(Type, $('#__vision').val());
+            });
+        });
+
+
+        function update(type, indata) {
+            $.ajax({
+                type: "POST",
+                url: Routing.generate('backend_ajax_set_' + type, {data: indata}),
+                success: function (data) {
+                    $('h4#ajaxTitle').text('Succcess');
+                    $('#ajaxMessage p').text('Updated');
+                    $('#ajaxResultMessages').modal('show');
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    console.log(xhr.responseText);
+                    console.log(textStatus);
+                    console.log(errorThrown);
+                    $('h4#ajaxTitle').text('Error');
+                    $('#ajaxMessage p').text('Error Contact Your Administrator.');
+                    $('#ajaxResultMessages').modal('show');
+                }
+            });
+
+        }
+        ;
+    </script>
+{%endblock%}

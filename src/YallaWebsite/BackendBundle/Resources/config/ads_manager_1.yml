@@ -1,0 +1,10 @@
+home_sidebar_spot:
+    cache_public: true
+    cache_shared_max_age: 86400
+    cache_max_age: 28800
+    random: true
+    data: 
+        - type: "image"
+          link: "http://127.0.0.1:8000/uploads/media/adv/download.jpg"
+          target: "http://google.fr/"
+          weight: 5

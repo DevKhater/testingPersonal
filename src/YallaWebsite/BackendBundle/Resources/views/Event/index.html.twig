@@ -1,0 +1,98 @@
+{% extends "YallaWebsiteBackendBundle:Event:base_event.html.twig" %}
+{% block stylesheets %} 
+    <style>
+        table thead tr th {
+            text-align: center;
+        }
+    </style>
+{% endblock %}
+{% block controlleraction  %}
+    {% if pagination is empty %}
+        <div class="alert alert-info" role="alert">
+            <strong>No Events!</strong> Found in database.
+        </div>
+    {% else %}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        Events Information
+                    </div>
+                    <div class="panel-body">
+                        <p><strong>Number of Evenets : </strong><span class="badge badge-inverse">{{ entities }}</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-md-12 col-sm-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        Event Listing
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered table-hover zebra" style="text-align: center">
+                                <thead >
+                                    <tr>
+                                        <th></th>
+                                        <th>Event Name</th>
+                                        <th colspan="2">Location Information</th>
+                                        <th>Event Flyer</th>
+                                        <th>Event Date and Time</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for event in pagination %}
+                                        <tr>
+                                            <th style="text-align: center;">
+                                                <a href="{{path ('backend_event_delete',  {'id': event.id}) }}"><button class="btn btn-danger btn-sm"><i class="fa fa-pencil"></i> Delete</button></a>
+                                                <a href="{{path ('backend_event_show',  {'id': event.id}) }}"><button class="btn btn-primary btn-sm"><i class="fa fa-eye"></i> View </button></a>
+                                            </th>
+
+                                            <td><a href="{{ path ('backend_event_edit',  {'id': event.id})}}">{{event.title}}</a></td>
+                                                {% if event.isVenue == true %}
+                                                <td colspan="2"><strong>Venue : </strong> {{ event.venue.title }}<br />
+                                                    <strong><i>Address : </i></strong>{{ event.venue.location.address }} <br/>
+                                                    <strong><i>Telephone : </i></strong>{{ event.venue.location.telephone }} <br/></td>
+
+                                            {% else %}
+
+                                                <td>{{event.location.address}}</td>
+                                                <td>{{event.location.telephone}}</td>
+
+                                            {% endif %}
+
+
+                                            <td style="text-align: center;">{% thumbnail  event.media, 'small' %}</td>
+                                            <td>
+                                                {% if event.startDate|date("F jS") ==  event.endDate|date("F jS") %} 
+                                                    <strong>Date : </strong>{{event.startDate|date("F jS")}} <br/>
+                                                    &emsp;&emsp;Start : {{event.startDate|date("g:ia")}}
+                                                    &emsp;&emsp;End : {{event.endDate|date("g:ia")}}<br/>
+                                                {% else %}
+                                                    <strong>Start Date : </strong>{{event.startDate|date("F jS \\a\\t g:ia")}} <br/>
+                                                    <strong>End Date : </strong>{{event.endDate|date("F jS \\a\\t g:ia")}} <br/>
+                                                {% endif %}
+
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <div class="navigation">
+                            {{ knp_pagination_render(pagination) }}
+                        </div>
+                    </div>
+                </div>
+            </div>        
+
+        </div>
+
+    {% endif %}
+{% endblock %}
