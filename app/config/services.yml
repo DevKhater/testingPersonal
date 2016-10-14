@@ -33,3 +33,6 @@ services:
         tags:
             - { name: 'twig.extension' }
         arguments : [ ]
+    mod.manager:
+        class: YallaWebsite\ModBundle\Factory\SlideFactory
+        arguments: [ @doctrine.orm.entity_manager]

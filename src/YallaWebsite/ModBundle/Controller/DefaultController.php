@@ -9,11 +9,11 @@ class DefaultController extends Controller
     public function indexAction($name)
     {
         $em = $this->getDoctrine()->getEntityManager();
-        $entity2 = $em->getRepository('YallaWebsiteBackendBundle:Article')->find(3);
-        $entity3 = $em->getRepository('YallaWebsiteBackendBundle:Article')->find(4);
-        $entity1 = $em->getRepository('YallaWebsiteBackendBundle:Article')->find(5);
-        $entity4 = $em->getRepository('YallaWebsiteBackendBundle:Event')->find(1);
-        $entity0 = $em->getRepository('YallaWebsiteBackendBundle:Event')->find(2);
+//        $entity2 = $em->getRepository('YallaWebsiteBackendBundle:Article')->find(3);
+//        $entity3 = $em->getRepository('YallaWebsiteBackendBundle:Article')->find(4);
+//        $entity1 = $em->getRepository('YallaWebsiteBackendBundle:Article')->find(5);
+//        $entity4 = $em->getRepository('YallaWebsiteBackendBundle:Event')->find(1);
+//        $entity0 = $em->getRepository('YallaWebsiteBackendBundle:Event')->find(2);
 //        for ($i=0; $i++; $i<5){
 //            echo $i+1;
 //            if ($em->getRepository('YallaWebsiteModBundle:Slide')->getPosition($i+1)){
@@ -35,12 +35,10 @@ class DefaultController extends Controller
 //                $em->flush($Slide);
 //            }
 //        }
-        
-        $sldier = $em->getRepository('YallaWebsiteModBundle:Slide')->getSlider();
-        foreach ($sldier as $slide) {
-            $data = $em->getRepository($slide->getEntityType())->find($slide->getEntityID());
-            dump($data->getMedia());
-        }
+      
+        $BEManager = $this->container->get('mod.manager');
+        $BEManager->getSlides();exit;
+
         return $this->render('YallaWebsiteModBundle:Default:index.html.twig');
     }
 }
