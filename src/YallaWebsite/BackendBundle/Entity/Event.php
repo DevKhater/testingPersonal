@@ -432,4 +432,18 @@ class Event extends BaseEntity
     {
         return $this->similarArtist;
     }
+    
+        protected $publicUrl;
+    public function setPublicUrl($slug)
+    {
+        $this->publicUrl = $slug;
+
+        return $this;
+    }
+
+    
+    public function getPublicUrl()
+    {
+        return $this->publicUrl;
+    }
 }

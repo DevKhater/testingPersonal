@@ -39,6 +39,13 @@ class Slide
     /**
      * @var integer
      *
+     * @ORM\Column(name="entity_url", type="string")
+     */
+    private $entityUrl;
+
+    /**
+     * @var integer
+     *
      * @ORM\Column(name="slide_pos", type="integer")
      */
     private $position;
@@ -48,6 +55,20 @@ class Slide
         $this->em = $em;
         $this->entityType = $this->em->getClassMetadata(get_class($entity))->getName();
         $this->entityID = $entity->getId();
+        switch ($this->entityType) {
+            case "Application\Sonata\MediaBundle\Entity\Gallery" :
+                $this->entityUrl = "/snapshots/view/" . $entity->getSlug();
+                break;
+            case "YallaWebsite\BackendBundle\Entity\Article" :
+                $this->entityUrl = "/gossip/" . $entity->getSlug();
+                break;
+            case "YallaWebsite\BackendBundle\Entity\Venue" :
+                $this->entityUrl = "/guides/";
+                break;
+            case "YallaWebsite\BackendBundle\Entity\Event" :
+                $this->entityUrl = "/event/" . $entity->getSlug();
+                break;
+        }
     }
 
     /**
@@ -59,7 +80,6 @@ class Slide
     {
         return $this->id;
     }
-
 
     /**
      * Set entityType
@@ -128,5 +148,29 @@ class Slide
     public function getPosition()
     {
         return $this->position;
+    }
+
+
+    /**
+     * Set entityUrl
+     *
+     * @param string $entityUrl
+     * @return Slide
+     */
+    public function setEntityUrl($entityUrl)
+    {
+        $this->entityUrl = $entityUrl;
+
+        return $this;
+    }
+
+    /**
+     * Get entityUrl
+     *
+     * @return string 
+     */
+    public function getEntityUrl()
+    {
+        return $this->entityUrl;
     }
 }

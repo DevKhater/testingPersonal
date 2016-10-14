@@ -34,5 +34,5 @@ services:
             - { name: 'twig.extension' }
         arguments : [ ]
     mod.manager:
-        class: YallaWebsite\ModBundle\Factory\SlideFactory
+        class: YallaWebsite\ModBundle\Factory\HPFactory
         arguments: [ @doctrine.orm.entity_manager]

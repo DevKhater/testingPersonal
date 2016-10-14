@@ -1,0 +1,58 @@
+{# empty Twig template #}
+{% extends "@YallaWebsiteFrontendBundle/views/front_base.html.twig" %}
+{% block body %}
+    <div class="wrapper">
+        <div class="IndexTitle">
+            <h1>Artists</h1>
+        </div>
+        {% for artist in pagination  %}
+            <div class="artistDiv col-xs-15 col-sm-15 col-md-15 col-lg-15">
+                <div class="artistContent" data-toggle="modal" data-target="#{{artist.id}}" style="background-image: url('{% path  artist.media, 'displayIndex' %}')">
+                </div>
+                <div class="artistDivTitle" data-toggle="modal" data-target="#{{artist.id}}" >
+                    <span type="button" class="btn btn-secondary btn-xs customArtistButton">
+                        {{ artist.title }}
+                    </span>
+                </div>
+                <div id="{{artist.id}}" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                                <div class="modal_image">
+                                    {% thumbnail artist.media, 'popup' %}
+                                </div>
+                                <div class="modal_description">
+                                    <h2>{{artist.title}}</h2>
+                                    <p>{{artist.biography}}</p>
+                                    <div class="artist_upcoming_events">
+                                        <p>Upcoming Events</p>
+                                        {% for key, data in upcoming %}
+                                            {% if artist.id == key %} 
+                                                <span><a href='{{path('yalla_website_frontened_event', {id: data[0].slug})}}'>{{ data[0].title }}</a></span>
+                                                {%endif%}
+                                            {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="modal_footer">
+                                    <p class='artists_social_media_links'>
+                                        {% set entity = artist %}
+                                        {% include '@YallaWebsiteFrontendBundle/views/Template/artistSocialMedia.html.twig'%}
+                                    
+                                    <button type="button" class="btn btn-default" data-dismiss="modal" style='float:right;'>Close</button>
+                                    </p>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        {% endfor %}
+
+        <div class="page_pagination">
+
+            {% if (pagination) %}
+                {{ knp_pagination_render(pagination, 'YallaWebsiteFrontendBundle:Template:pagination.html.twig') }}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

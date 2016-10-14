@@ -1,0 +1,8 @@
+{# _image.html.twig #}
+<div class="epub">
+    <a href="{{ item.target|default('#') }}" class="epub__link" target="_blank">
+    <img src="{{ asset(item.link|default('http://cdn.domain.tld/path/to/default.png')) }}" 
+         alt="{{ item.description|default('Default description') }}" 
+         class="epub__image img-responsive" />
+  </a>
+</div>

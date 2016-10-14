@@ -1,0 +1,235 @@
+{% extends "@YallaWebsiteFrontendBundle/views/front_base.html.twig" %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('bundles/yallawebsitefrontend/css/jquery.bxslider.css') }}" />
+{% endblock %}
+
+{% block body %}
+    <div class="wrapper">
+        <div class="row" id='homepage_part1'>
+            <div class="innerPagesTitle col-lg-12" >
+                <h1 class='longerTitle'>EXCEPTIONAL LEVEL OF ENTERTAINMENT</h1>
+            </div>
+            <div class="col-lg-12">
+                <div id='HomePageSliderDiv'>
+                    <ul class="bxslider">
+                        {% for i in 0..4 %}
+                            {% set t = attribute(_context, 'slider'~i) %}
+                            <li>
+                                <div class="HomeSliderDiv"> 
+                                    <div class="HomeSliderContent" style="background-image: url('{% path t.media, 'homePage' %}')">
+                                        <div class="HomeSlideDivTitle">
+                                            <a href="{{slider_url[loop.index0]}}">
+                                                {% if t.name is defined %}
+                                                    <h3>{{t.name}}</h3>
+                                                {% elseif t.title is defined %}
+                                                    <h3>{{t.title}}</h3>
+                                                {% endif %}
+                                                {% if t.description is defined %}
+                                                    <h5>{{t.description[0:50]|striptags  }}...</h5>
+                                                {% else  %}
+                                                    <h5>{{ t.content[0:50]|striptags  }}...</h5>
+                                                {% endif%}
+                                                {% media  t.media, 'homePage' %}
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div id='HomePageRightDiv'>
+                    <div id="yt_player">    
+                        <div id="ytplayer"></div>
+                    </div>
+                    <a id='a_hp_gallery' href="{{path('sonata_media_gallery_view',{'id' : home.selectedGallery.slug} )}}">
+                        <div id="hp_gallery"  style="background-image: url('{% path  home.selectedGallery.media, 'medium' %}');">
+                            <p>SNAPSHOT</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section style="background-color: white;padding-top:2%;">
+        <div class="wrapper">
+            <div class="row" id='homepage_part2'>
+                <div class="IndexTitle col-lg-12" >
+                    <p class="subtitle fancy"><span id='longer'>WHAT'S ON</span></p>
+                </div>
+                {% set art= [0,1,2,3]|shuffle %}
+                <div class="side_article_container">
+                    {% for i in 0..1 %}
+                        {% set t = attribute(_context, 'article'~art[i]) %}
+                        <div class="hp_sideArticles">
+                            <div class="hp_sideArticles_cont">
+                                {% if t.slug is defined %}
+                                    <a href="{{path('yalla_website_frontened_article',  {'id': t.slug}) }}"><div class="hp_sideArticle_image" style="background-image: url('{% path t.media, 'medium' %}');"></div></a>
+                                    {% endif %}
+                                <div class="hp_sideArticle_text">
+                                    <div class="sideArticle_text">
+                                        {% if t.description is defined %} {{ t.description[0:75]|trim|striptags }} {%endif%}
+                                    </div>
+                                    <div class="sideArticle_button">
+                                        {% if t.slug is defined %}
+                                            <a href="{{path('yalla_website_frontened_article',  {'id': t.slug}) }}">
+                                                <button type="button" class="btn btn-secondary btn-xs">
+                                                    Read More
+                                                </button>
+                                            </a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div id='HomeArticlesFeatured'>
+                    <div id='TheFeaturedArticle' style="background-image: url('{% path  home.mainArticle.media, 'large' %}');">
+                        <img src="{{asset('bundles/yallawebsitefrontend/images/RC.png')}}" />
+                        <div id="FeaturedArticles_hover">
+                            <p id="FeaturedArticle_title">{{home.mainArticle.title}}</p>
+                            <p>{{home.mainArticle.description[0:100]|striptags }}</p>
+                            <a href="{{path('yalla_website_frontened_article',  {'id': home.mainArticle.slug}) }}"><button type="button" class="homePageButtons btn btn-secondary btn-xs">Read More</button></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="side_article_container">
+                    {% for i in 2..3 %}
+                        {% set t = attribute(_context, 'article'~art[i]) %}
+                        <div class="hp_sideArticles">
+                            <div class="hp_sideArticles_cont">
+                                {% set article = home.sideArticles[art[i]] %}
+                                {% if t.slug is defined %}
+                                    <a href="{{path('yalla_website_frontened_article',  {'id': t.slug}) }}"><div class="hp_sideArticle_image" style="background-image: url('{% path t.media, 'medium' %}');"></div></a>
+                                    {% endif %}
+                                <div class="hp_sideArticle_text">
+                                    <div class="sideArticle_text">
+                                        {% if t.description is defined %} <p>{{ t.description [0:75]|striptags  }}</p> {% endif %}
+                                    </div>
+                                    <div class="sideArticle_button">
+                                        {% if t.slug is defined %}
+                                            <a href="{{path('yalla_website_frontened_article',  {'id': t.slug}) }}">
+                                                <button type="button" class="btn btn-secondary btn-xs">
+                                                    Read More
+                                                </button>
+                                            </a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section style="background-color: #eaeaea;padding-top:2%;">
+        <div class="wrapper">
+            <div class="row" id='homepage_part3'>
+                <div class="IndexTitle col-lg-12" >
+                    <p class="subtitle fancy"><span>Hottest Events of the week</span></p>
+                </div>
+                <div>
+                    {% for i in 0 .. 4 %}
+                        {% set t = attribute(_context, 'week'~i) %}
+                        {% if t is defined %}
+                            <div class="col-xs-153  col-sm-15 col-md-15 col-lg-15 " >
+                                <div class='hp_eventDay' style="background-image: url('{% path  t.media, 'small' %}');">
+                                    <div class="eventDay_date">
+                                        <span class="eventDay_dateDay">{{t.startDate|date('D')|slice(0,3)}}</span><br/>
+                                        <span class="eventDay_dateMonth">{{t.startDate|date('M')|slice(0,3)}}</span><br/>
+                                        <span class="eventDay_dateday">{{t.startDate|date('d')}}</span><br/>
+                                    </div>
+                                    <div class="eventDay_TitleDiv">
+                                        <p class="eventDay_title">
+                                            <a href="{{path('yalla_website_frontened_event',  {'id': t.slug}) }}">
+                                                {{t.title}}
+                                            </a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div>
+                    <div class="col-xs-153  col-sm-15 col-md-15 col-lg-15 hidden-sm hidden-xs " ></div>
+                    {% for i in 5 .. 6 %}
+                        {% set t = attribute(_context, 'week'~i) %}
+                        {% if t is defined %}
+                            {#{% if i == 6 %}<div style="margin:0 auto;">{% endif %}#}
+                            <div class="col-xs-153  col-sm-15 col-md-15 col-lg-15" >
+                                <div class='hp_eventDay' style="background-image: url('{% path  t.media, 'small' %}');">
+                                    <div class="eventDay_date">
+                                        <span class="eventDay_dateDay">{{t.startDate|date('D')|slice(0,3)}}</span><br/>
+                                        <span class="eventDay_dateMonth">{{t.startDate|date('M')|slice(0,3)}}</span><br/>
+                                        <span class="eventDay_dateday">{{t.startDate|date('d')}}</span><br/>
+                                    </div>
+                                    <div class="eventDay_TitleDiv">
+                                        <p class="eventDay_title">
+                                            <a href="{{path('yalla_website_frontened_event',  {'id': t.slug}) }}">
+                                                {{t.title}}
+                                            </a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    <div class="col-xs-153  col-sm-15 col-md-15 col-lg-15">
+                        <a href="{{path('yalla_website_frontened_events')}}">
+                            <div class='hp_eventDay' style="background-image: url('{{ asset('bundles/yallawebsitefrontend/images/more.jpg') }}');"></div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+{% endblock %}
+
+
+{% block javascripts %}
+    <script src="{{asset('bundles/yallawebsitefrontend/js/jquery.bxslider.min.js')}}"></script>    
+    <script>
+        // Load the IFrame Player API code asynchronously.
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/player_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        // Replace the 'ytplayer' element with an <iframe> and
+        // YouTube player after the API code downloads.
+        var player;
+        function onYouTubePlayerAPIReady() {
+            player = new YT.Player('ytplayer', {
+                height: '100%',
+                width: '100%',
+                videoId: '{{home.videoLink}}'
+            });
+        }
+
+
+        jQuery(document).ready(function ($) {
+            $('.bxslider').bxSlider({
+                minSlides: 1,
+                maxSlides: 1,
+                adaptiveHeight: true,
+                pager: false,
+                controls: true,
+                nextText: '&#8594;',
+                prevText: '&#8592;'
+            });
+        });
+
+
+
+    </script>
+{% endblock %}

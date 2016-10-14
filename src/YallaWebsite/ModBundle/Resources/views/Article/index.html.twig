@@ -1,0 +1,38 @@
+{% extends "@YallaWebsiteFrontendBundle/views/front_base.html.twig" %}
+{% block body %}
+        <div class="wrapper">
+
+        <div class="IndexTitle">
+            <h1>All Around Us</h1>
+        </div>
+        {% for article in pagination  %}
+            <div class="articleDiv">
+                <a href="{{path('yalla_website_frontened_article',  {'id': article.slug}) }}">
+                <div class="articleContent" style="background-image: url('{% path  article.media, 'displayIndex' %}')">
+                    <div class="articleDivTitle">
+                        {{ article.title }}
+                    </div>
+                </div>
+            </a>
+                <div class="theArticleContent">
+                    {% if article.description is not empty %}
+                    <p>{{ article.description[0:100]|raw|striptags }}...<br>
+                        <span><a href="{{path('yalla_website_frontened_article',  {'id': article.slug}) }}">more..</a></span></p>
+                    {% else %}
+                    <p>No Description Available ... <br>
+                        <span><a href="{{path('yalla_website_frontened_article',  {'id': article.slug}) }}">more..</a></span></p>
+                    {%endif %}
+                </div>
+
+            </div>
+        {% endfor %}
+
+        <div class="page_pagination">
+
+            {% if (pagination) %}
+                {{ knp_pagination_render(pagination, 'YallaWebsiteFrontendBundle:Template:pagination.html.twig') }}
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}

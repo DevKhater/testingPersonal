@@ -1,0 +1,58 @@
+    function createSideArticles {
+        
+        $entity0 = $em->getRepository('YallaWebsiteBackendBundle:Article')->find(5);
+        $entity1 = $em->getRepository('YallaWebsiteBackendBundle:Article')->find(4);
+        $entity2 = $em->getRepository('YallaWebsiteBackendBundle:Article')->find(3);
+        $entity3 = $em->getRepository('YallaWebsiteBackendBundle:Article')->find(3);
+        for ($i=0; $i<4; $i++){
+            dump($em->getRepository('YallaWebsiteModBundle:SideArticle')->getPosition($i+1));
+         if ($em->getRepository('YallaWebsiteModBundle:SideArticle')->getPosition($i+1)){
+                var_dump('Found in position');
+                $name = "entity".$i;
+                $oldSlide = $em->getRepository('YallaWebsiteModBundle:SideArticle')->getPosition($i+1);
+                dump($oldSlide);dump($i);
+                $oldSlide->setEntityID($$name->getId());
+                $em->persist($oldSlide);
+                $em->flush($oldSlide);
+                dump($oldSlide);
+            } else {
+                dump('create new');
+                $name = "entity".$i;
+                $Slide = new SideArticle($$name);
+                //$Slide->setEntityType($this->em->getClassMetadata(get_class($$name))->getName());
+                //$Slide->setEntityID($$name->getId());
+                $Slide->setPosition($i+1);
+                $em->persist($Slide);
+                $em->flush($Slide);
+            }
+        }
+    }
+    function createSLider(){
+       $entity2 = $em->getRepository('YallaWebsiteBackendBundle:Article')->find(3);
+        $entity3 = $em->getRepository('YallaWebsiteBackendBundle:Article')->find(4);
+        $entity1 = $em->getRepository('YallaWebsiteBackendBundle:Article')->find(5);
+        $entity4 = $em->getRepository('YallaWebsiteBackendBundle:Event')->find(1);
+        $entity0 = $em->getRepository('YallaWebsiteBackendBundle:Event')->find(2);
+        for ($i=0; $i<5; $i++){
+            echo $i+1;
+            if ($em->getRepository('YallaWebsiteModBundle:Slide')->getPosition($i+1)){
+                echo $i+1;
+                $name = "entity".$i;
+                $oldSlide = $em->getRepository('YallaWebsiteModBundle:Slide')->getPosition($i+1);
+                dump($oldSlide);dump($i);
+                $oldSlide->setPosition($i+1);
+                $oldSlide->setEntityType($em->getClassMetadata(get_class($$name))->getName());
+                $oldSlide->setEntityID($$name->getId());
+                $em->persist($oldSlide);
+                $em->flush($oldSlide);
+            } else {
+                $name = "entity".$i;
+                $Slide = new Slide($em, $$name);
+                //$Slide->setEntityType($this->em->getClassMetadata(get_class($$name))->getName());
+                //$Slide->setEntityID($$name->getId());
+                $Slide->setPosition($i+1);
+                $em->persist($Slide);
+                $em->flush($Slide);
+            }
+        }
+}

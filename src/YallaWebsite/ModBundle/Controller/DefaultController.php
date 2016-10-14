@@ -4,41 +4,23 @@ namespace YallaWebsite\ModBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use YallaWebsite\ModBundle\Entity\Slide;
+use YallaWebsite\ModBundle\Entity\SideArticle;
 class DefaultController extends Controller
 {
-    public function indexAction($name)
+    public function indexAction()
     {
         $em = $this->getDoctrine()->getEntityManager();
-//        $entity2 = $em->getRepository('YallaWebsiteBackendBundle:Article')->find(3);
-//        $entity3 = $em->getRepository('YallaWebsiteBackendBundle:Article')->find(4);
-//        $entity1 = $em->getRepository('YallaWebsiteBackendBundle:Article')->find(5);
-//        $entity4 = $em->getRepository('YallaWebsiteBackendBundle:Event')->find(1);
-//        $entity0 = $em->getRepository('YallaWebsiteBackendBundle:Event')->find(2);
-//        for ($i=0; $i++; $i<5){
-//            echo $i+1;
-//            if ($em->getRepository('YallaWebsiteModBundle:Slide')->getPosition($i+1)){
-//                $name = "entity".$i;
-//                $oldSlide = $em->getRepository('YallaWebsiteModBundle:Slide')->findBy(array('position' => $i+1));
-//                dump($oldSlide);dump($i);
-//                $oldSlide->setPosition($i+1);
-//                $oldSlide->setEntityType($em->getClassMetadata(get_class($$name))->getName());
-//                $oldSlide->setEntityID($$name->getId());
-//                $em->persist($oldSlide);
-//                $em->flush($oldSlide);
-//            } else {
-//                $name = "entity".$i;
-//                $Slide = new Slide($em, $$name);
-//                //$Slide->setEntityType($this->em->getClassMetadata(get_class($$name))->getName());
-//                //$Slide->setEntityID($$name->getId());
-//                $Slide->setPosition($i+1);
-//                $em->persist($Slide);
-//                $em->flush($Slide);
-//            }
-//        }
-      
+        
         $BEManager = $this->container->get('mod.manager');
-        $BEManager->getSlides();exit;
-
-        return $this->render('YallaWebsiteModBundle:Default:index.html.twig');
+        $slider = $BEManager->getSlides();
+        $sideArticles = $BEManager->getSideArticles();
+        $weekEvents = $BEManager->getWeekEvents();
+        //$hp = $BEManager->getHP();
+        return $this->render('YallaWebsiteModBundle:Default:index.html.twig', array(
+            'slider' => $slider, 
+            'sideArt' => $sideArticles ,
+            'weekEvents' => $weekEvents ,
+            //'content' => $hp,
+            ));
     }
-}
+}    

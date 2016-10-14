@@ -46,6 +46,7 @@ class Article extends BaseEntity
     protected $metaDescription;
     protected $url;
     protected $mediaUrl;
+    protected $publicUrl;
     
     /**
      * @ORM\ManyToOne(targetEntity="YallaWebsite\BackendBundle\Entity\UserProfile")
@@ -261,5 +262,19 @@ class Article extends BaseEntity
     public function getDescription()
     {
         return $this->description;
+    }
+    
+    
+    public function setPublicUrl($slug)
+    {
+        $this->publicUrl = $slug;
+
+        return $this;
+    }
+
+    
+    public function getPublicUrl()
+    {
+        return $this->publicUrl;
     }
 }

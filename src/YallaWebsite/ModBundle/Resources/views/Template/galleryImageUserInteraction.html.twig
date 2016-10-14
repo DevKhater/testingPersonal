@@ -1,0 +1,7 @@
+<p class='fb_vote' id='vote{{ galleryHasMedia.id }}'>
+    <span id='{{galleryHasMedia.id}}' onclick='fb_login({{galleryHasMedia.id}});'>Vote</span>
+</p>
+<p class='sm_share'>
+    <span class='Gallery_SM_Share'>{% include '@YallaWebsiteFrontendBundle/views/Template/socialMediaShare.html.twig' %}</span>
+</p>
+{#{{ voteValue(galleryHasMedia.id)|rating(5) }}#}
